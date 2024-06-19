@@ -1,0 +1,7 @@
+*.FCBak
+# *.FCStd.????????-*
+# *.gcode
+# *.png
+#\#*.dxf
+# *.dxf~
+# *.nc
