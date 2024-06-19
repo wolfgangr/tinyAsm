@@ -1,5 +1,5 @@
 # ***************************************************************************
-# *   Copyright (c) 2015 John Doe john@doe.com                              *   
+# *    Copyright (c) 2024 Wolfgang Rosner wolfgangr@github.com              *   
 # *                                                                         *
 # *   This file is part of the FreeCAD CAx development system.              *
 # *                                                                         *
@@ -25,10 +25,10 @@
 import FreeCAD
 import sys
 
-class MyWorkbench (Workbench):
+class tinyAsm (Workbench):
 
-    MenuText = "My Workbench"
-    ToolTip = "A description of my workbench"
+    MenuText = "tiny Asm"
+    ToolTip = "minimalistic datum based Assembly toolbox"
     Icon = """paste here the contents of a 16x16 xpm icon"""
 
     def Initialize(self):
@@ -59,4 +59,4 @@ class MyWorkbench (Workbench):
         # This is not a template, the returned string should be exactly "Gui::PythonWorkbench"
         return "Gui::PythonWorkbench"
        
-Gui.addWorkbench(MyWorkbench())
+Gui.addWorkbench(tinyAsm())

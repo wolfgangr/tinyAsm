@@ -1,8 +1,8 @@
-"""FreeCAD init script of XXX module"""
+"""FreeCAD init script of tinyAsm module"""
 # template: https://wiki.freecad.org/Workbench_creation
 #
 # ***************************************************************************
-# *   Copyright (c) 2015 John Doe john@doe.com                              *   
+# *   Copyright (c) 2024 Wolfgang Rosner wolfgangr@github.com               *   
 # *                                                                         *
 # *   This file is part of the FreeCAD CAx development system.              *
 # *                                                                         *
