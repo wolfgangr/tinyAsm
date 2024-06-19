@@ -36,10 +36,30 @@ class tinyAsm (Workbench):
         It is executed once in a FreeCAD session followed by the Activated function.
         """
         import MyModuleA, MyModuleB # import here all the needed files that create your FreeCAD commands
+        
+        
+        collectedtoolbarcommands = [
+            "Spreadsheet_CreateSheet",
+            "DatumLCS",
+            # "Part_CheckGeometry",
+            "Part_Primitives",
+            # "Part_Builder",
+            # "Part_Cut",
+            # "Part_Fuse",
+            # "Part_Common",
+            # "Part_Extrude",
+            # "Part_Revolve",
+            "Part_EditAttachment",
+
+        ]
+        # import FreeCAD
+        
         self.list = ["MyCommand1", "MyCommand2"] # a list of command names created in the line above
-        self.appendToolbar("My Commands", self.list) # creates a new toolbar with your commands
-        self.appendMenu("My New Menu", self.list) # creates a new menu
-        self.appendMenu(["An existing Menu", "My submenu"], self.list) # appends a submenu to an existing menu
+        # self.appendToolbar("My Commands", self.list) # creates a new toolbar with your commands
+        self.appendToolbar("collected Commands", collectedtoolbarcommands)
+        # self.appendMenu("My New Menu", self.list) # creates a new menu
+        self.appendMenu("collected Commands", collectedtoolbarcommands)
+        # self.appendMenu(["An existing Menu", "My submenu"], self.list) # appends a submenu to an existing menu
 
     def Activated(self):
         """This function is executed whenever the workbench is activated"""
