@@ -37,6 +37,14 @@ class tinyAsm (Workbench):
         """
         import MyModuleA, MyModuleB # import here all the needed files that create your FreeCAD commands
         
+        mycommands = [
+            "tiny_GPInspector",
+            "tiny_GPpart",
+            "tiny_GPattach",
+            "tiny_Solver",
+            "tiny_Animator",
+            "tiny_pySheet"
+        ]
         
         collectedtoolbarcommands = [
             "Spreadsheet_CreateSheet",
@@ -54,11 +62,16 @@ class tinyAsm (Workbench):
         ]
         # import FreeCAD
         
-        self.list = ["MyCommand1", "MyCommand2"] # a list of command names created in the line above
+        # self.list = ["MyCommand1", "MyCommand2"] # a list of command names created in the line above
+        
         # self.appendToolbar("My Commands", self.list) # creates a new toolbar with your commands
+        self.appendToolbar("tiny Assembly Commands", mycommands)
         self.appendToolbar("collected Commands", collectedtoolbarcommands)
+        
         # self.appendMenu("My New Menu", self.list) # creates a new menu
+        self.appendMenu("tiny Assembly Commands", mycommands)
         self.appendMenu("collected Commands", collectedtoolbarcommands)
+        
         # self.appendMenu(["An existing Menu", "My submenu"], self.list) # appends a submenu to an existing menu
 
     def Activated(self):
