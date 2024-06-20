@@ -72,6 +72,14 @@ You always can put any other object into a Part container and add a LCS to where
 
 ##### Variants are left to the users Imagination
 As the example for the animator shows, with the help of Spreadsheets and combined expression in Features Properties, arbitrary complexity can be produced under user control.
+Development, Testing and the extra button is restricted to LCS - the instance of datum objects which fully contrains the 6 DoF of a placment.
+Other datum objects (plane, line, dot) are easily derived from a LCS by simply ignoring some DoF of a LCSs placment.
+
+## To Be Done
+* the code
+* documemtation
+* examples
+* present in Forum
 
 
 
