@@ -1,5 +1,6 @@
 *.FCBak
 freecad/tinyAsmWB/__pycache__/
+freecad/tinyAsmWB/icons/not_used/
 # *.FCStd.????????-*
 # *.gcode
 # *.png
