@@ -23,7 +23,7 @@ from freecad.tinyAsmWB import ICON_PATH
 
 _cmdList = [
         'bareLCS',
-        'CreateCommonSheet',
+        # 'CreateCommonSheet',
         # "taPart_EditAttachment",
             # # "Part_CheckGeometry",
             # # "Part_Builder",
@@ -72,17 +72,17 @@ class DatumLCS(BaseCommand):
 FreeCADGui.addCommand('bareLCS',DatumLCS())
 
 ##
-class SpreadsheetCreate(BaseCommand):
-
-    def GetResources(self):
-        return {'Pixmap'  : os.path.join(ICON_PATH , 'Spreadsheet.svg') ,
-                     'MenuText': "Create common Spreadsheet" ,
-                     'ToolTip' : "create common spreadsheet\nw/o Python extensions"}
-
-    def Activated(self):
-        FreeCAD.ActiveDocument.addObject('Spreadsheet::Sheet','Sheet')
-
-FreeCADGui.addCommand('CreateCommonSheet',SpreadsheetCreate())
+# class SpreadsheetCreate(BaseCommand):
+#
+#     def GetResources(self):
+#         return {'Pixmap'  : os.path.join(ICON_PATH , 'Spreadsheet.svg') ,
+#                      'MenuText': "Create common Spreadsheet" ,
+#                      'ToolTip' : "create common spreadsheet\nw/o Python extensions"}
+#
+#     def Activated(self):
+#         FreeCAD.ActiveDocument.addObject('Spreadsheet::Sheet','Sheet')
+#
+# FreeCADGui.addCommand('CreateCommonSheet',SpreadsheetCreate())
 
 
 ##

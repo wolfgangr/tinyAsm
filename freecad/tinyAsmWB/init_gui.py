@@ -34,6 +34,8 @@ import sys
 import os
 
 import PartGui
+import SpreadsheetGui
+
 
 from freecad.tinyAsmWB import commands
 import freecad.tinyAsmWB as tinyAsmWB
@@ -73,17 +75,23 @@ class tinyAsm (FreeCADGui.Workbench):
             # "Part_Common",
             "Part_Extrude",
             # "Part_Revolve",
-
         ]
+        collectedtoolbarcommands.extend(parttoolbarcommands)
+
+        othercmds = [
+            "Spreadsheet_CreateSheet",
+        ]
+        collectedtoolbarcommands.extend(othercmds)
+
 
         # self.appendToolbar("tiny Assembly Commands", mycommands)
         self.appendToolbar("common Commands", collectedtoolbarcommands)
-        self.appendToolbar("common Commands", parttoolbarcommands)
+        # self.appendToolbar("common Commands", parttoolbarcommands)
 
         # self.appendMenu("My New Menu", self.list) # creates a new menu
         # self.appendMenu("tiny Assembly Commands", mycommands)
         self.appendMenu("commonCmds", collectedtoolbarcommands)
-        self.appendMenu("commonCmds", parttoolbarcommands)
+        # self.appendMenu("commonCmds", parttoolbarcommands)
 
         # self.appendMenu(["An existing Menu", "My submenu"], self.list) # appends a submenu to an existing menu
 
