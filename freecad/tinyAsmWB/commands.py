@@ -5,6 +5,10 @@ import os
 import FreeCADGui #  as Gui
 import FreeCAD    #  as App
 
+
+import AttachmentEditor
+
+
 from freecad.tinyAsmWB import ICON_PATH
 # from . import interaction, boxtools, bspline_tools
 # from . import fem2d
@@ -20,6 +24,7 @@ from freecad.tinyAsmWB import ICON_PATH
 _cmdList = [
         'bareLCS',
         'CreateCommonSheet',
+        "taPart_EditAttachment",
             # # "Part_CheckGeometry",
             # # "Part_Builder",
             # # "Part_Cut",
@@ -53,7 +58,7 @@ class BaseCommand(object):
     def view(self):
         return FreeCADGui.ActiveDocument.ActiveView
 
-
+##
 class DatumLCS(BaseCommand):
 
     def GetResources(self):
@@ -66,7 +71,7 @@ class DatumLCS(BaseCommand):
 
 FreeCADGui.addCommand('bareLCS',DatumLCS())
 
-
+##
 class SpreadsheetCreate(BaseCommand):
 
     def GetResources(self):
@@ -78,6 +83,14 @@ class SpreadsheetCreate(BaseCommand):
         FreeCAD.ActiveDocument.addObject('Spreadsheet::Sheet','Sheet')
 
 FreeCADGui.addCommand('CreateCommonSheet',SpreadsheetCreate())
+
+
+##
+# see https://github.com/FreeCAD/FreeCAD/blob/0.21.2/src/Mod/Part/AttachmentEditor/Commands.py
+if FreeCAD.GuiUp:
+    # import FreeCADGui as Gui
+    command_instance = AttachmentEditor.Commands.CommandEditAttachment()
+    FreeCADGui.addCommand('taPart_EditAttachment', command_instance)
 
 
 
