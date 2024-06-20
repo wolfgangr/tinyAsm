@@ -19,7 +19,7 @@ from freecad.tinyAsmWB import ICON_PATH
 
 _cmdList = [
         'DatumLCS',
-        'Spreadsheet_CreateSheet',
+        'CreateCommonSheet',
             # # "Part_CheckGeometry",
             # # "Part_Builder",
             # # "Part_Cut",
@@ -41,7 +41,7 @@ class BaseCommand(object):
         return {'Pixmap': '.svg', 'MenuText': 'Text', 'ToolTip': 'Text'}
 
     def IsActive(self):
-        if App.ActiveDocument is None:
+        if FreeCAD.ActiveDocument is None:
             return False
         else:
             return True
@@ -51,7 +51,7 @@ class BaseCommand(object):
 
     @property
     def view(self):
-        return Gui.ActiveDocument.ActiveView
+        return FreeCADGui.ActiveDocument.ActiveView
 
 
 class DatumLCS(BaseCommand):
@@ -62,7 +62,7 @@ class DatumLCS(BaseCommand):
                      'ToolTip' : "Datum LCS\nw/o PD overhead\nas in Manipulator workbench"}
 
     def Activated(self):
-        FreeCAD.ActiveDocument.addObject('PartDesign::CoordinateSystem','Local_CS')
+        FreeCAD.ActiveDocument.addObject('PartDesign::CoordinateSystem','LCS')
 
 FreeCADGui.addCommand('DatumLCS',DatumLCS())
 
@@ -72,12 +72,12 @@ class SpreadsheetCreate(BaseCommand):
     def GetResources(self):
         return {'Pixmap'  : os.path.join(ICON_PATH , 'Spreadsheet.svg') ,
                      'MenuText': "Spreadsheet_CreateSheet" ,
-                     'ToolTip' : "create common spreadsheet/nw/o Python extensions"}
+                     'ToolTip' : "create common spreadsheet\nw/o Python extensions"}
 
     def Activated(self):
         FreeCAD.ActiveDocument.addObject('Spreadsheet::Sheet','Sheet')
 
-FreeCADGui.addCommand('Spreadsheet_CreateSheet',SpreadsheetCreate())
+FreeCADGui.addCommand('CreateCommonSheet',SpreadsheetCreate())
 
 
 

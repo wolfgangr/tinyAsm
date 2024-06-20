@@ -31,6 +31,7 @@ except ImportError:
 # import FreeCAD
 # import FreeCADGui
 import sys
+import os
 
 from freecad.tinyAsmWB import commands
 import freecad.tinyAsmWB as tinyAsmWB
