@@ -23,7 +23,7 @@
 
 try:
     import FreeCADGui
-    Gui = FreeCADGui
+    # Gui = FreeCADGui
     import FreeCAD
 except ImportError:
     print("module not loaded with freecad")
@@ -32,10 +32,11 @@ except ImportError:
 # import FreeCADGui
 import sys
 
-# from freecad.tinyAsmWB import commands
+from freecad.tinyAsmWB import commands
 import freecad.tinyAsmWB as tinyAsmWB
+from   freecad.tinyAsmWB import ICON_PATH
 
-class tinyAsm (Gui.Workbench):
+class tinyAsm (FreeCADGui.Workbench):
 
     MenuText = "tiny Asm"
     ToolTip = "minimalistic datum based Assembly toolbox"
@@ -56,7 +57,7 @@ class tinyAsm (Gui.Workbench):
             "tiny_pySheet"
         ]
 
-        collectedtoolbarcommands = tinyAsmWB.commands._cmdList
+        collectedtoolbarcommands = commands._cmdList
         # = [
         #     "Spreadsheet_CreateSheet",
         #     "DatumLCS",
@@ -105,8 +106,8 @@ class tinyAsm (Gui.Workbench):
         return "Gui::PythonWorkbench"
 
 try:
-    Gui.removeWorkbench('tinyAsm')
+    FreeCADGui.removeWorkbench('tinyAsm')
 except:
     print("cannot remove Workbench 'tinyAsm' ")
 
-Gui.addWorkbench(tinyAsm)
+FreeCADGui.addWorkbench(tinyAsm)

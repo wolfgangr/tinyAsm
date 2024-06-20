@@ -2,9 +2,10 @@
 # boilerplated from beam WB and Manipulator WB
 import os
 
-import FreeCADGui as Gui
-import FreeCAD as App
-# from freecad.frametools import ICON_PATH
+import FreeCADGui #  as Gui
+import FreeCAD    #  as App
+
+from freecad.tinyAsmWB import ICON_PATH
 # from . import interaction, boxtools, bspline_tools
 # from . import fem2d
 # from . import screw_maker
