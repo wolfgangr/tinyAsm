@@ -5,7 +5,7 @@ import os
 import FreeCADGui #  as Gui
 import FreeCAD    #  as App
 
-
+# Part....
 import AttachmentEditor
 
 
