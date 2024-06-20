@@ -18,7 +18,7 @@ from freecad.tinyAsmWB import ICON_PATH
 #     "CutShape"]
 
 _cmdList = [
-        'DatumLCS',
+        'bareLCS',
         'CreateCommonSheet',
             # # "Part_CheckGeometry",
             # # "Part_Builder",
@@ -64,14 +64,14 @@ class DatumLCS(BaseCommand):
     def Activated(self):
         FreeCAD.ActiveDocument.addObject('PartDesign::CoordinateSystem','LCS')
 
-FreeCADGui.addCommand('DatumLCS',DatumLCS())
+FreeCADGui.addCommand('bareLCS',DatumLCS())
 
 
 class SpreadsheetCreate(BaseCommand):
 
     def GetResources(self):
         return {'Pixmap'  : os.path.join(ICON_PATH , 'Spreadsheet.svg') ,
-                     'MenuText': "Spreadsheet_CreateSheet" ,
+                     'MenuText': "Create common Spreadsheet" ,
                      'ToolTip' : "create common spreadsheet\nw/o Python extensions"}
 
     def Activated(self):

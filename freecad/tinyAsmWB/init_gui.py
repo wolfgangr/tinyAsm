@@ -68,7 +68,7 @@ class tinyAsm (FreeCADGui.Workbench):
 
         # self.appendMenu("My New Menu", self.list) # creates a new menu
         # self.appendMenu("tiny Assembly Commands", mycommands)
-        self.appendMenu("common Cmds", collectedtoolbarcommands)
+        self.appendMenu("commonCmds", collectedtoolbarcommands)
 
         # self.appendMenu(["An existing Menu", "My submenu"], self.list) # appends a submenu to an existing menu
 
