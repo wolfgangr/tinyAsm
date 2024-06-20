@@ -65,6 +65,7 @@ class tinyAsm (FreeCADGui.Workbench):
 
         parttoolbarcommands = [
             # "Part_CheckGeometry",
+            'Part_EditAttachment',
             "Part_Primitives",
             "Part_Builder",
             # "Part_Cut",
@@ -72,6 +73,7 @@ class tinyAsm (FreeCADGui.Workbench):
             # "Part_Common",
             "Part_Extrude",
             # "Part_Revolve",
+
         ]
 
         # self.appendToolbar("tiny Assembly Commands", mycommands)
