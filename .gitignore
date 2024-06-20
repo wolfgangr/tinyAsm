@@ -1,4 +1,5 @@
 *.FCBak
+freecad/tinyAsmWB/__pycache__/
 # *.FCStd.????????-*
 # *.gcode
 # *.png
