@@ -2,7 +2,7 @@
 # template: https://wiki.freecad.org/Workbench_creation
 #
 # ***************************************************************************
-# *   Copyright (c) 2024 Wolfgang Rosner wolfgangr@github.com               *   
+# *   Copyright (c) 2024 Wolfgang Rosner wolfgangr@github.com               *
 # *                                                                         *
 # *   This file is part of the FreeCAD CAx development system.              *
 # *                                                                         *
@@ -24,6 +24,6 @@
 # *                                                                         *
 # ***************************************************************************/
 
-FreeCAD.addImportType("My own format (*.own)", "importOwn")
-FreeCAD.addExportType("My own format (*.own)", "exportOwn")
-print("I am executing some stuff here when FreeCAD starts!")
+# FreeCAD.addImportType("My own format (*.own)", "importOwn")
+# FreeCAD.addExportType("My own format (*.own)", "exportOwn")
+print("... loading tinyAsmWB... Dummy")

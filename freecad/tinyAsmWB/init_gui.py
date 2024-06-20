@@ -29,7 +29,7 @@ class tinyAsm (Workbench):
 
     MenuText = "tiny Asm"
     ToolTip = "minimalistic datum based Assembly toolbox"
-    Icon = """paste here the contents of a 16x16 xpm icon"""
+    Icon = """ this BS throws error at loading tinyAsm Gui paste here the contents of a 16x16 xpm icon"""
 
     def Initialize(self):
         """This function is executed when the workbench is first activated.
