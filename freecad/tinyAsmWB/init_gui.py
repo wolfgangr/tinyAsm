@@ -22,7 +22,8 @@
 # ***************************************************************************/
 
 try:
-    import FreeCADGui as Gui
+    import FreeCADGui
+    Gui = FreeCADGui
     import FreeCAD
 except ImportError:
     print("module not loaded with freecad")
@@ -31,11 +32,14 @@ except ImportError:
 # import FreeCADGui
 import sys
 
+# from freecad.tinyAsmWB import commands
+import freecad.tinyAsmWB as tinyAsmWB
+
 class tinyAsm (Gui.Workbench):
 
     MenuText = "tiny Asm"
     ToolTip = "minimalistic datum based Assembly toolbox"
-    Icon = """ this BS throws error at loading tinyAsm Gui paste here the contents of a 16x16 xpm icon"""
+    # Icon = """ this BS throws error at loading tinyAsm Gui paste here the contents of a 16x16 xpm icon"""
 
     def Initialize(self):
         """This function is executed when the workbench is first activated.
@@ -52,32 +56,33 @@ class tinyAsm (Gui.Workbench):
             "tiny_pySheet"
         ]
 
-        collectedtoolbarcommands = [
-            "Spreadsheet_CreateSheet",
-            "DatumLCS",
-            # "Part_CheckGeometry",
-            # "Part_Builder",
-            # "Part_Cut",
-            # "Part_Fuse",
-            # "Part_Common",
-            "Sketcher_NewSketch",
-            "Part_Extrude",
-            "Part_Primitives",
-            # "Part_Revolve",
-            "Part_EditAttachment",
-
-        ]
+        collectedtoolbarcommands = tinyAsmWB.commands._cmdList
+        # = [
+        #     "Spreadsheet_CreateSheet",
+        #     "DatumLCS",
+        #     "Part_CheckGeometry",
+        #     "Part_Builder",
+        #     "Part_Cut",
+        #     "Part_Fuse",
+        #     "Part_Common",
+        #     "Sketcher_NewSketch",
+        #     "Part_Extrude",
+        #     "Part_Primitives",
+        #     "Part_Revolve",
+        #     "Part_EditAttachment",
+        #
+        # ]
         # import FreeCAD
 
         # self.list = ["MyCommand1", "MyCommand2"] # a list of command names created in the line above
 
         # self.appendToolbar("My Commands", self.list) # creates a new toolbar with your commands
-        self.appendToolbar("tiny Assembly Commands", mycommands)
-        self.appendToolbar("collected Commands", collectedtoolbarcommands)
+        # self.appendToolbar("tiny Assembly Commands", mycommands)
+        self.appendToolbar("common Commands", collectedtoolbarcommands)
 
         # self.appendMenu("My New Menu", self.list) # creates a new menu
-        self.appendMenu("tiny Assembly Commands", mycommands)
-        self.appendMenu("collected Commands", collectedtoolbarcommands)
+        # self.appendMenu("tiny Assembly Commands", mycommands)
+        self.appendMenu("common Cmds", collectedtoolbarcommands)
 
         # self.appendMenu(["An existing Menu", "My submenu"], self.list) # appends a submenu to an existing menu
 
@@ -99,4 +104,9 @@ class tinyAsm (Gui.Workbench):
         # This is not a template, the returned string should be exactly "Gui::PythonWorkbench"
         return "Gui::PythonWorkbench"
 
-Gui.addWorkbench(tinyAsm())
+try:
+    Gui.removeWorkbench('tinyAsm')
+except:
+    print("cannot remove Workbench 'tinyAsm' ")
+
+Gui.addWorkbench(tinyAsm)
