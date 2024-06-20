@@ -21,11 +21,17 @@
 # *                                                                         *
 # ***************************************************************************/
 
+try:
+    import FreeCADGui as Gui
+    import FreeCAD
+except ImportError:
+    print("module not loaded with freecad")
 
-import FreeCAD
+# import FreeCAD
+# import FreeCADGui
 import sys
 
-class tinyAsm (Workbench):
+class tinyAsm (Gui.Workbench):
 
     MenuText = "tiny Asm"
     ToolTip = "minimalistic datum based Assembly toolbox"
