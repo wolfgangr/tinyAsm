@@ -71,49 +71,7 @@ class DatumLCS(BaseCommand):
 
 FreeCADGui.addCommand('bareLCS',DatumLCS())
 
-##
-# class SpreadsheetCreate(BaseCommand):
-#
-#     def GetResources(self):
-#         return {'Pixmap'  : os.path.join(ICON_PATH , 'Spreadsheet.svg') ,
-#                      'MenuText': "Create common Spreadsheet" ,
-#                      'ToolTip' : "create common spreadsheet\nw/o Python extensions"}
-#
-#     def Activated(self):
-#         FreeCAD.ActiveDocument.addObject('Spreadsheet::Sheet','Sheet')
-#
-# FreeCADGui.addCommand('CreateCommonSheet',SpreadsheetCreate())
 
-
-##
-# # see https://github.com/FreeCAD/FreeCAD/blob/0.21.2/src/Mod/Part/AttachmentEditor/Commands.py
-
-
-# class PartAttach(BaseCommand):
-#
-#     def GetResources(self):
-#         return {'Pixmap'  : os.path.join(ICON_PATH , 'Part_Attachment.svg') ,
-#                      'MenuText': "Part WB attacher" ,
-#                      'ToolTip' : "attach selected object"}
-#
-#     def Activated(self):
-#         # FreeCAD.ActiveDocument.addObject('Spreadsheet::Sheet','Sheet')
-#         try:
-#             AttachmentEditor.Commands.editAttachment()
-#         except Exception as err:
-#             print ("cannot attach: ", str(err))
-#
-# FreeCADGui.addCommand("taPart_EditAttachment", PartAttach() )
-
-
-
-
-
-# if FreeCAD.GuiUp:
-#     # import FreeCADGui as Gui
-#     command_instance = AttachmentEditor.Commands.CommandEditAttachment()
-#     bci = BaseCommand(command_instance)
-#     FreeCADGui.addCommand('taPart_EditAttachment', command_instance)
 
 
 
