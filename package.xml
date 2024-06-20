@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<package format="1" xmlns="https://wiki.freecad.org/Package_Metadata">
+
+  <name>tiny Assembly workbench</name>
+
+  <description>A minimalistic Assembly workbench buildong on Parts, Links, datum items and Spreadsheets </description>
+
+  <version>0.0.2</version>
+
+  <date>2024-06-20</date>
+
+  <maintainer email="wolfgangr@github.com">Wolfgang Rosner</maintainer>
+
+  <license file="LICENSE">LGPL-2.1-or-later</license>
+
+  <url branch="master" type="repository">https://github.com/wolfgangr/tinyAsm</url>
+
+  <url type="bugtracker">https://github.com/wolfgangr/tinyAsm/issues</url>
+
+  <url type="readme">https://github.com/wolfgangr/tinyAsm/blob/master/README.md</url>
+
+  <url type="documentation">https://github.com/wolfgangr/tinyAsm/doc</url>
+
+  <icon>freecad/frametools/icons/beam.svg</icon>
+
+  <content>
+    <workbench>
+      <freecadmin>0.21.2</freecadmin>
+      <depend optional="False" type="automatic">scipy</depend>
+      <tag>Assembly</tag>
+      <tag>Links</tag>
+      <classname>tinyAsmWB</classname>
+      <subdirectory>./</subdirectory>
+    </workbench>
+  </content>
+
+</package>
