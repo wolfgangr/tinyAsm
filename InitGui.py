@@ -1,5 +1,5 @@
 # ***************************************************************************
-# *    Copyright (c) 2024 Wolfgang Rosner wolfgangr@github.com              *   
+# *    Copyright (c) 2024 Wolfgang Rosner wolfgangr@github.com              *
 # *                                                                         *
 # *   This file is part of the FreeCAD CAx development system.              *
 # *                                                                         *
@@ -35,8 +35,8 @@ class tinyAsm (Workbench):
         """This function is executed when the workbench is first activated.
         It is executed once in a FreeCAD session followed by the Activated function.
         """
-        import MyModuleA, MyModuleB # import here all the needed files that create your FreeCAD commands
-        
+        # import MyModuleA, MyModuleB # import here all the needed files that create your FreeCAD commands
+
         mycommands = [
             "tiny_GPInspector",
             "tiny_GPpart",
@@ -45,7 +45,7 @@ class tinyAsm (Workbench):
             "tiny_Animator",
             "tiny_pySheet"
         ]
-        
+
         collectedtoolbarcommands = [
             "Spreadsheet_CreateSheet",
             "DatumLCS",
@@ -62,17 +62,17 @@ class tinyAsm (Workbench):
 
         ]
         # import FreeCAD
-        
+
         # self.list = ["MyCommand1", "MyCommand2"] # a list of command names created in the line above
-        
+
         # self.appendToolbar("My Commands", self.list) # creates a new toolbar with your commands
         self.appendToolbar("tiny Assembly Commands", mycommands)
         self.appendToolbar("collected Commands", collectedtoolbarcommands)
-        
+
         # self.appendMenu("My New Menu", self.list) # creates a new menu
         self.appendMenu("tiny Assembly Commands", mycommands)
         self.appendMenu("collected Commands", collectedtoolbarcommands)
-        
+
         # self.appendMenu(["An existing Menu", "My submenu"], self.list) # appends a submenu to an existing menu
 
     def Activated(self):
@@ -88,9 +88,9 @@ class tinyAsm (Workbench):
         # "recipient" will be either "view" or "tree"
         self.appendContextMenu("My commands", self.list) # add commands to the context menu
 
-    def GetClassName(self): 
+    def GetClassName(self):
         # This function is mandatory if this is a full Python workbench
         # This is not a template, the returned string should be exactly "Gui::PythonWorkbench"
         return "Gui::PythonWorkbench"
-       
+
 Gui.addWorkbench(tinyAsm())
