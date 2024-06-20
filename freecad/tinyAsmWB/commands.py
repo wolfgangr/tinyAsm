@@ -19,8 +19,7 @@ from freecad.tinyAsmWB import ICON_PATH
 
 _cmdList = [
         'DatumLCS',
-            # "Spreadsheet_CreateSheet",
-            # "DatumLCS",
+        'Spreadsheet_CreateSheet',
             # # "Part_CheckGeometry",
             # # "Part_Builder",
             # # "Part_Cut",
@@ -66,6 +65,20 @@ class DatumLCS(BaseCommand):
         FreeCAD.ActiveDocument.addObject('PartDesign::CoordinateSystem','Local_CS')
 
 FreeCADGui.addCommand('DatumLCS',DatumLCS())
+
+
+class SpreadsheetCreate(BaseCommand):
+
+    def GetResources(self):
+        return {'Pixmap'  : os.path.join(ICON_PATH , 'Spreadsheet.svg') ,
+                     'MenuText': "Spreadsheet_CreateSheet" ,
+                     'ToolTip' : "create common spreadsheet/nw/o Python extensions"}
+
+    def Activated(self):
+        FreeCAD.ActiveDocument.addObject('Spreadsheet::Sheet','Sheet')
+
+FreeCADGui.addCommand('Spreadsheet_CreateSheet',SpreadsheetCreate())
+
 
 
 # class Beam(BaseCommand):

@@ -41,6 +41,7 @@ class tinyAsm (FreeCADGui.Workbench):
     MenuText = "tiny Asm"
     ToolTip = "minimalistic datum based Assembly toolbox"
     # Icon = """ this BS throws error at loading tinyAsm Gui paste here the contents of a 16x16 xpm icon"""
+    Icon = os.path.join(ICON_PATH , 'myIcon.svg')
 
     def Initialize(self):
         """This function is executed when the workbench is first activated.
@@ -58,26 +59,9 @@ class tinyAsm (FreeCADGui.Workbench):
         ]
 
         collectedtoolbarcommands = commands._cmdList
-        # = [
-        #     "Spreadsheet_CreateSheet",
-        #     "DatumLCS",
-        #     "Part_CheckGeometry",
-        #     "Part_Builder",
-        #     "Part_Cut",
-        #     "Part_Fuse",
-        #     "Part_Common",
-        #     "Sketcher_NewSketch",
-        #     "Part_Extrude",
-        #     "Part_Primitives",
-        #     "Part_Revolve",
-        #     "Part_EditAttachment",
-        #
-        # ]
-        # import FreeCAD
 
-        # self.list = ["MyCommand1", "MyCommand2"] # a list of command names created in the line above
 
-        # self.appendToolbar("My Commands", self.list) # creates a new toolbar with your commands
+
         # self.appendToolbar("tiny Assembly Commands", mycommands)
         self.appendToolbar("common Commands", collectedtoolbarcommands)
 
@@ -105,7 +89,7 @@ class tinyAsm (FreeCADGui.Workbench):
         # This is not a template, the returned string should be exactly "Gui::PythonWorkbench"
         return "Gui::PythonWorkbench"
 
-try:
+try:    # for development: readd WB in running FC
     FreeCADGui.removeWorkbench('tinyAsm')
 except:
     print("cannot remove Workbench 'tinyAsm' ")
