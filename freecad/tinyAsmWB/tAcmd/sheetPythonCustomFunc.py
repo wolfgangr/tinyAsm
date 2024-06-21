@@ -1,14 +1,23 @@
-# (c) Wolfgang Rosner 2024 - wolfagngr@github.com
-# License: LGPL 2+
-#
+"""
+sheetPythonCustomFunc.py
+
+standard spreadsheet with pyhton extension to add user defined functions
+seperates code from data as required by FreeCAD security model
+see issue ### TBD
+
+(c) Wolfgang Rosner 2024 - wolfagngr@github.com
+License: LGPL 2+
+
 # boilerplated from
 # https://wiki.freecad.org/Create_a_FeaturePython_object_part_I#Complete_code
 # https://wiki.freecad.org/Scripted_objects_with_attachment
 
+"""
+
 import FreeCAD as App
-# import os
+import os
 import re
-import datetime
+# import datetime
 import Spreadsheet
 
 # https://docs.python.org/3.8/library/ast.html#ast.literal_eval
@@ -16,38 +25,21 @@ import Spreadsheet
 from ast import literal_eval
 
 # my own sanitized function eval
-import dev.myTinyAsm.spEvalidate as spEvalidate
+# import dev.myTinyAsm.spEvalidate as spEvalidate
 
-import xml.sax
+import freecad.tinyAsmWB.tAcmd.spEvalidate as spEvalidate
+# from   freecad.tinyAsmWB import ICON_PATH
 
-CONST_MYBang = "'#!"
+
+# import xml.sax
+
+# CONST_MYBang = "'#!"
 
 CONST_prefix     ="cpy_"
 CONST_DEF_prefix ="cpy_def"
 CONST_RES_prefix ="cpy_res"
 CONST_CFG_prefix ="cpy_cfg"
 
-from dev.myTinyAsm.sheetPyMods_base import *
-from dev.myTinyAsm.trianglesolver import solve
-
-
-# check if propObj is 'cells' and if so, dump XML
-# otherwise return False
-#
-# def debug_cells(obj, prop):
-#
-#     if prop != 'cells':
-#         return False
-#
-#     propObj = getattr(obj, 'cells')
-#     #
-#     # if not hasattr(propObj, 'TypeId'):
-#     #     return False
-#     #
-#     # if not (str(propObj.TypeId) == 'Spreadsheet::PropertySheet'):
-#     #     return False
-#     print (propObj.Content)
-#     return True # propObj.Content
 
 # required if we overload execute()
 def recompute_cells(obj):
@@ -164,37 +156,9 @@ def update_res_fields(obj):
                 obj.removeProperty(prop)
 
 
-
-# class sheetSaxHandler(xml.sax.handler.ContentHandler):
-#
-#     def startElement(self, name, attrs):
-#         print(f"BEGIN: <{name}>, {attrs.keys()}")
-#         if attrs.__contains__('address') and attrs.__contains__('content'):
-#             attr = attrs.getValue('address')
-#             val  = attrs.getValue('content')
-#             print(f"\t{attr} -> {val}")
-#             match = re.search(f"^{CONST_MYBang}(.*)", val)
-#             if match:
-#                 evld = match.groups()[0]
-#                 print(f"\t\tTBD: eval({evld})")
-#
-#     def endElement(self, name):
-#         print(f"END: </{name}>")
-#
-#     def characters(self, content):
-#         if content.strip() != "":
-#             print("CONTENT:", repr(content))
-
-# class sheetSaxRecompAllCells(xml.sax.handler.ContentHandler):
-#     def startElement(self, name, attrs):
-#         print(f"BEGIN: <{name}>, {attrs.keys()}")
-#         if name == 'Cell':
-#             addr = attrs.getValue('address')
-#             print(f'doing obj.recomputeCells({addr})')
-#             obj.recomputeCells(addr)
-
-
+##
 # https://forum.freecad.org/viewtopic.php?p=182016#p182016
+
 class pySheetViewProvider:
     ''' basic defs '''
 
@@ -202,24 +166,7 @@ class pySheetViewProvider:
         # obj.Proxy = self
         self.Object = obj
 
-    # def __getstate__(self):
-    #     return None
-    #
-    # def __setstate__(self, state):
-    #     return None
-
-    # maybe this is what we need in 0.21.2 instead?
-    # def dumps(self):
-    #     return None
-    #
-    # def loads(self, state):
-    #     return None
-    #
-    # def onBeforeChange(proxy,obj,prop):
-    #     print ("VP before change:", prop)
-    #
-    # def onChanged(proxy,obj,prop):
-    #     print ("VP changed:", prop)
+##
 
 class pySheet():
     """
@@ -274,19 +221,9 @@ class pySheet():
     def onDocumentRestored(self, obj):
         obj.Proxy = self
 
-    # https://forum.freecad.org/viewtopic.php?p=346763&sid=d7e3d832b5e934914fcdccc5bdc100d5#p346763
-    # does this help against "not json serializable" ?
-    # def __getstate__(self):
-    #     # return None
-    #     return dumps(self)
-    # #
-    # def __setstate__(self, state):
-    #     #     return None
-    #     return loads(self, state):
-    # #
-    # # # maybe this is what we need in 0.21.2 instead?
-    def dumps(self):
-        return None
+    # # # # maybe this is what we need in 0.21.2 instead?
+    # def dumps(self):
+    #     return None
     # #
     def loads(self, state):
         # can't spEvalidator right here since we have no access to object
@@ -312,12 +249,12 @@ class pySheet():
         recompute_cells(obj)
 
 
-    def onBeforeChange(proxy,obj,prop):
-        # print ("before change:", prop)
-        # debug_cells(obj, prop)
-        # if prop == 'cells':
-        #     xml.sax.parseString(obj.cells.Content, sheetSaxHandler())
-        pass
+    # def onBeforeChange(proxy,obj,prop):
+    #     # print ("before change:", prop)
+    #     # debug_cells(obj, prop)
+    #     # if prop == 'cells':
+    #     #     xml.sax.parseString(obj.cells.Content, sheetSaxHandler())
+    #     pass
 
     def onChanged(proxy,obj,prop):
         # print ("changed:", prop)
