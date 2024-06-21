@@ -12,13 +12,9 @@ License: LGPL 2+
 
 # ======================================
 #   config
-# icon_rel_path = "/icons/PartLinkGlobalPlacementGetter.svg"
-# icon_rel_path = "/../icons/GPpart.svg"
 icon_name = "GPpart.svg"
-
 parameter_group_name = "GP" # no trailing _ !
 tooltip = "maintain gobal Placement inspectors for all link childs"
-
 # ======================================
 
 
@@ -30,25 +26,12 @@ except ImportError:
     print("GPInspector running in GUI-less mode")
 
 import os
-import re
-import datetime
-# import dev.myTinyAsm.LinkGPlcInsp as lgp
+
 import freecad.tinyAsmWB.tAcmd.LinkGPlcInsp as lgp
 from   freecad.tinyAsmWB import ICON_PATH
 
-# import importlib
-# importlib.reload(lgp)
 
-
-
-# def dummy(): pass
-# script_path = (dummy.__code__.co_filename)
-# filePath = os.path.dirname(script_path)     # (__file__)
-# iconPath = filePath + icon_rel_path
-# # print ('iconPath:', iconPath)
-
-# iconPath = os.path.join(ICON_PATH , 'DatumLCS.svg')
-
+##
 
 class GPpart(object):
     def __init__(self, obj=None):

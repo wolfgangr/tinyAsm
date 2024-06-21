@@ -116,6 +116,6 @@ class tinyAsm (FreeCADGui.Workbench):
 try:    # for development: readd WB in running FC
     FreeCADGui.removeWorkbench('tinyAsm')
 except:
-    print("cannot remove Workbench 'tinyAsm' ")
+    print("DEBUG ### cannot remove Workbench 'tinyAsm' ")
 
 FreeCADGui.addWorkbench(tinyAsm)

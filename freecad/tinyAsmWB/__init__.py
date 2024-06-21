@@ -34,7 +34,7 @@ DIR = os.path.dirname(__file__)
 ICON_PATH = os.path.join(DIR, "icons")
 
 
-print("... loading tinyAsmWB... Dummy")
+print("... loading tinyAsmWB...")
 import freecad.tinyAsmWB as tinyAsmWB
 
 # import freecad.tinyAsmWB.tAcmd

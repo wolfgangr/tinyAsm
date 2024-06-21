@@ -127,7 +127,8 @@ def create_uGPL(obj_name = 'GPLinkInspector', arg_tgt = None):
             print('no valid object selected, leave empty')
             pass
 
-    App.ActiveDocument.recompute()
+    # throws recursive recompute warning
+    # App.ActiveDocument.recompute()
     return obj
 
 class GPLinkInspector():
