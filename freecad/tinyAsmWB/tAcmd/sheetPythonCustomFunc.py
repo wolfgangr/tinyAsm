@@ -240,6 +240,8 @@ class pySheet():
         if not getattr(self, 'spEvalidator', None):
             print ("in execute: spE_init(self, obj) ")
             self._spE_init(obj)
+            # does this trigger onChanged?
+            # obj.cpy_cfg_reimport = True
 
         # print('what shall I do to execute?')
         ## sync res fields
@@ -256,13 +258,17 @@ class pySheet():
     #     #     xml.sax.parseString(obj.cells.Content, sheetSaxHandler())
     #     pass
 
-    def onChanged(proxy,obj,prop):
+    def onChanged(self,obj,prop):
         # print ("changed:", prop)
         # debug_cells(obj, prop)
         # if prop == 'cells':
         #     xml.sax.parseString(obj.cells.Content, sheetSaxHandler())
         # CONST_DEF_prefix
-        spo = obj.Proxy # self of sheet python object is not in local namespace here
+        # spo = obj.Proxy # self of sheet python object is not in local namespace here
+
+        # catch errors on loading
+        if not getattr(self, 'spEvalidator', None):
+            return None
 
         if re.match(f"^{CONST_prefix}.*" , prop): # prefilter since we are called quite often
             match = re.match(f"^{CONST_DEF_prefix}_(.*)" , prop)
@@ -277,26 +283,30 @@ class pySheet():
             if match:
                 print ("changed:", prop)
                 m_sufx = match.group(1)
-
+## does this catch errors on restore?
                 if (m_sufx == 'prefix') or (m_sufx == 'modules'):
-                    spo.spEvalidator._update_modList()
-                    print ('updated modlist: ', spo.spEvalidator.modlist)
+                    if True: # getattr(self, 'spEvalidator', None):
+                        self.spEvalidator._update_modList()
+                        print ('updated modlist: ', self.spEvalidator.modlist)
+                    else:
+                        print("spEvalidator not yet instantiated")
+                        # obj.cpy_cfg_reimport = True
 
                 elif (m_sufx == 'reimport'):
                     if getattr(obj, prop): # i.e. both existing and True
                         ##
                         print('reimporting modules...')
-                        spo.spEvalidator._update_funcList()
-                        print ('updated list of available functions: ', spo.spEvalidator.funclist)
+                        self.spEvalidator._update_funcList()
+                        print ('updated list of available functions: ', self.spEvalidator.funclist)
                         setattr(obj, prop, False)
-                        spo.spEvalidator.update_accesibleFuncs()
-                        print ('updated list of selected functions: ', spo.spEvalidator.accsFlist)
+                        self.spEvalidator.update_accesibleFuncs()
+                        print ('updated list of selected functions: ', self.spEvalidator.accsFlist)
 
                     obj.touch()
 
                 elif (m_sufx == 'functions'):
-                    spo.spEvalidator.update_accesibleFuncs()
-                    print ('updated list of selected functions: ', spo.spEvalidator.accsFlist)
+                    self.spEvalidator.update_accesibleFuncs()
+                    print ('updated list of selected functions: ', self.spEvalidator.accsFlist)
 
                 else:
                     print (f"### TBD: ###: evaluate configuration for {m_sufx}")
