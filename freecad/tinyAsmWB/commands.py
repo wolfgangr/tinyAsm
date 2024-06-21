@@ -135,17 +135,17 @@ class taGPpart(BaseCommand):
 
     # grey out unless a single part instance is selected
     # from Part/AttachmentEditor/Commands.py
-    def IsActive(self):
-        sel = FreeCADGui.Selection.getSelectionEx()
-
-        if len(sel) == 1:
-            if hasattr(sel[0].Object,"Placement"):
-                if hasattr(sel[0].Object, "Group"):
-                    self.selection = sel[0].Object
-                    return True
-
-        self.selection = None
-        return False
+    # def IsActive(self):
+    #     sel = FreeCADGui.Selection.getSelectionEx()
+    #
+    #     if len(sel) == 1:
+    #         if hasattr(sel[0].Object,"Placement"):
+    #             if hasattr(sel[0].Object, "Group"):
+    #                 self.selection = sel[0].Object
+    #                 return True
+    #
+    #     self.selection = None
+    #     return False
 
     def Activated(self):
         gpp.create_GPpart()

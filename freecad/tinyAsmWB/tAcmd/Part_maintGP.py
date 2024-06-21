@@ -1,15 +1,19 @@
-# companion to unveilGlobalPlacement.py
+""" Part_maintGP.py
+companion to LinkGPlcInsp.py
 # keeps GP-inspectors attached to all link childs
-# suppsedly consistent for Expressions / Spreadsheet to retrieve
-# (c) Wolfgang Rosner 2024 - wolfagngr@github.com
-# License: LGPL 2+
-#
+# suppesedly consistent for Expressions / Spreadsheet to retrieve
+
+(c) Wolfgang Rosner 2024 - wolfagngr@github.com
+License: LGPL 2+
+
 # boilerplated from
 # https://wiki.freecad.org/Std_Part#Scripting
+"""
 
 # ======================================
 #   config
-icon_rel_path = "/icons/PartLinkGlobalPlacementGetter.svg"
+# icon_rel_path = "/icons/PartLinkGlobalPlacementGetter.svg"
+icon_rel_path = "/../icons/GPpart.svg"
 
 parameter_group_name = "GP" # no trailing _ !
 tooltip = "maintain gobal Placement inspectors for all link childs"
@@ -18,6 +22,12 @@ tooltip = "maintain gobal Placement inspectors for all link childs"
 
 
 import FreeCAD
+
+try:
+    import FreeCADGui
+except ImportError:
+    print("GPInspector running in GUI-less mode")
+
 import os
 import re
 import datetime

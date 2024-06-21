@@ -13,7 +13,9 @@ License: LGPL 2+
 
 # ======================================
 #   config
-icon_rel_path = "/icons/PartLinkGlobalPlacementGetter.svg"
+# icon_rel_path = "/icons/PartLinkGlobalPlacementGetter.svg"
+icon_rel_path = "/../icons/GPinsp.svg"
+
 # parameter_group_name = "Inspect_global_placement"
 # parameter_group_name = "GPget" # no trailing _ !
 
