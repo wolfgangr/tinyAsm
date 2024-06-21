@@ -45,7 +45,7 @@ cmdList = [
 mycommands = [
             "taGPInspector",
             "taGPpart",
-            # "tiny_GPpart",
+            "taGPattach",
             # "tiny_GPattach",
             # "tiny_Solver",
             # "tiny_Animator",
@@ -133,20 +133,6 @@ class taGPpart(BaseCommand):
                 'MenuText': "GPpart " ,
                 'ToolTip' : "Part container to be linked\nmaintains dependend GPinspectors"}
 
-    # grey out unless a single part instance is selected
-    # from Part/AttachmentEditor/Commands.py
-    # def IsActive(self):
-    #     sel = FreeCADGui.Selection.getSelectionEx()
-    #
-    #     if len(sel) == 1:
-    #         if hasattr(sel[0].Object,"Placement"):
-    #             if hasattr(sel[0].Object, "Group"):
-    #                 self.selection = sel[0].Object
-    #                 return True
-    #
-    #     self.selection = None
-    #     return False
-
     def Activated(self):
         gpp.create_GPpart()
         # pass
@@ -155,7 +141,41 @@ FreeCADGui.addCommand("taGPpart", taGPpart() )
 
 
 ##
-        #     "tiny_GPattach",
+#     "tiny_GPattach",
+
+gpa = freecad.tinyAsmWB.tAcmd.attachByGP
+
+class taGPattach(BaseCommand):
+
+    def GetResources(self):
+        return {'Pixmap'  : os.path.join(ICON_PATH , 'GPattach.svg') ,
+                'MenuText': "GPattach" ,
+                'ToolTip' : "attach one Container to another\nby matching placement of sub-objects\nfirst selection: Child\nsecond selection: Parent"}
+
+    # grey out unless a single link instance is selected
+    # from Part/AttachmentEditor/Commands.py
+    # def IsActive(self):
+    #     sel = FreeCADGui.Selection.getSelectionEx()
+    #
+    #     if len(sel) == 1:
+    #         if hasattr(sel[0].Object,"Placement"):
+    #             if hasattr(sel[0].Object, "ElementCount"):
+    #                 self.selection = sel[0].Object
+    #                 return True
+    #
+    #     self.selection = None
+    #     return False
+
+    def Activated(self):
+        # FreeCAD.ActiveDocument.addObject('PartDesign::CoordinateSystem','LCS')
+        # gpi.create_uGPL(obj_name = 'taGPinsp', arg_tgt = self.selection)
+        gpa.create_GPatt(obj_name='taGPattach')
+        # ### TBD: check for selected Part?
+        pass
+
+FreeCADGui.addCommand("taGPattach", taGPattach() )
+
+##
         #     "tiny_Solver",
         #     "tiny_Animator",
         #     "tiny_pySheet"
