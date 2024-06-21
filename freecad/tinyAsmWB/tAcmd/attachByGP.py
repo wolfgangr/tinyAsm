@@ -16,7 +16,13 @@ tooltip = "retrieved Global Placement of sub-Object - read only"
 # ======================================
 
 
-import FreeCAD as App
+import FreeCAD # as App
+
+try:
+    import FreeCADGui
+except ImportError:
+    print("GPattacher running in GUI-less mode")
+
 import os
 import re
 import datetime
@@ -33,7 +39,7 @@ def create_GPatt(obj_name = 'GPattach', attChild = None, attParent = None):
     """
 
     # obj = App.ActiveDocument.addObject('App::FeaturePython', obj_name)
-    obj = App.ActiveDocument.addObject('App::LinkPython', obj_name)
+    obj = FreeCAD.ActiveDocument.addObject('App::LinkPython', obj_name)
     # obj = App.ActiveDocument.addObject('App::LinkGroupPython', obj_name)
     # App::LinkPython
 
@@ -43,6 +49,7 @@ def create_GPatt(obj_name = 'GPattach', attChild = None, attParent = None):
         try:
             selection = FreeCADGui.Selection.getSelection()
         except:
+            selection = None
             print('no object selected')
 
     if attChild:
@@ -62,7 +69,7 @@ def create_GPatt(obj_name = 'GPattach', attChild = None, attParent = None):
 
 
 
-    App.ActiveDocument.recompute()
+    FreeCAD.ActiveDocument.recompute()
     return obj
 
 

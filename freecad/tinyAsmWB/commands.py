@@ -154,17 +154,17 @@ class taGPattach(BaseCommand):
 
     # grey out unless a single link instance is selected
     # from Part/AttachmentEditor/Commands.py
-    # def IsActive(self):
-    #     sel = FreeCADGui.Selection.getSelectionEx()
-    #
-    #     if len(sel) == 1:
-    #         if hasattr(sel[0].Object,"Placement"):
-    #             if hasattr(sel[0].Object, "ElementCount"):
-    #                 self.selection = sel[0].Object
-    #                 return True
-    #
-    #     self.selection = None
-    #     return False
+    def IsActive(self):
+        sel = FreeCADGui.Selection.getSelectionEx()
+
+        if len(sel) == 2:
+            # if hasattr(sel[0].Object,"Placement"):
+                # if hasattr(sel[0].Object, "ElementCount"):
+                    # self.selection = sel[0].Object
+            return True
+
+        # self.selection = None
+        return False
 
     def Activated(self):
         # FreeCAD.ActiveDocument.addObject('PartDesign::CoordinateSystem','LCS')
