@@ -1,19 +1,18 @@
+"""
+attachByGP.py
+- inspired by Assembly4-Attacher -
+attaches one Part Container or Part Link to another one
+by matching the placements of first level subobjects
+(preferrably LCS)
+and additional placment offset
 
-# (c) Wolfgang Rosner 2024 - wolfagngr@github.com
-# License: LGPL 2+
-#
+(c) Wolfgang Rosner 2024 - wolfagngr@github.com
+License: LGPL 2+
+
 # boilerplated from
 # https://wiki.freecad.org/Create_a_FeaturePython_object_part_I#Complete_code
+"""
 
-# ======================================
-#   config
-icon_rel_path = "/icons/PartLinkGlobalPlacementGetter.svg"
-# parameter_group_name = "Inspect_global_placement"
-# parameter_group_name = "GPget" # no trailing _ !
-
-parameter_group_name = "GP" # no trailing _ !
-tooltip = "retrieved Global Placement of sub-Object - read only"
-# ======================================
 
 
 import FreeCAD # as App
@@ -23,10 +22,7 @@ try:
 except ImportError:
     print("GPattacher running in GUI-less mode")
 
-import os
-import re
-import datetime
-
+##
 
 def create_GPatt(obj_name = 'GPattach', attChild = None, attParent = None):
     """
@@ -38,11 +34,7 @@ def create_GPatt(obj_name = 'GPattach', attChild = None, attParent = None):
     - default: None - to be assigned later
     """
 
-    # obj = App.ActiveDocument.addObject('App::FeaturePython', obj_name)
     obj = FreeCAD.ActiveDocument.addObject('App::LinkPython', obj_name)
-    # obj = App.ActiveDocument.addObject('App::LinkGroupPython', obj_name)
-    # App::LinkPython
-
     GPattach(obj)
 
     if not (attParent and attChild):
@@ -53,11 +45,9 @@ def create_GPatt(obj_name = 'GPattach', attChild = None, attParent = None):
             print('no object selected')
 
     if attChild:
-        # obj.b1AttChild = attChild
         obj.LinkedObject = attChild
 
     elif selection:
-        # obj.b1AttChild = selection.pop(0)
         obj.LinkedObject = selection.pop(0)
 
 
@@ -66,14 +56,10 @@ def create_GPatt(obj_name = 'GPattach', attChild = None, attParent = None):
     elif selection:
         obj.a1AttParent = selection.pop(0)
 
-
-
-
     FreeCAD.ActiveDocument.recompute()
     return obj
 
-
-
+##
 
 class GPattach():
     def __init__(self, obj):
@@ -83,16 +69,8 @@ class GPattach():
         self.Type = 'GPattach'
         obj.Proxy = self
 
-        # https://forum.freecad.org/viewtopic.php?p=760203#p760203
-        # https://wiki.freecad.org/Scripted_objects_with_attachment
         obj.ViewObject.Proxy = 0
 
-        # obj.addProperty('App::PropertyString', 'Description', 'Base', 'Box description')
-
-        # https://wiki.freecad.org/Scripted_objects/en#Available_extensions
-        # obj.addExtension('Part::AttachExtensionPython')
-        # App::LinkExtensionPython
-        # obj.addExtension('App::LinkExtensionPython')
 
         # Parent
         obj.addProperty("App::PropertyLink", "a1AttParent", "Attachment",
@@ -133,29 +111,13 @@ class GPattach():
             'effective Placement matrix applied to the child = invert(ChildPLC) * AttOffs * ParentPLC')
         obj.setEditorMode("c3AttChildResultPlc", ['ReadOnly'])
 
-        # obj.ExpressionEngine.append(('LinkPlacement', 'c3AttChildResultPlc'))
-        # obj.setExpression('LinkPlacement', 'c3AttChildResultPlc')
-
-        # result
 
 
-        # obj.setEditorMode('inspectedSubobjectList', ['ReadOnly'])
-
-    # def onChanged(self, obj, prop):
-    #     # self.execute(obj) # triggers endless recalc loop
-    #     try:
-    #         # prints "<App> Document.cpp(2705): Recursive calling of recompute"
-    #         # but result looks fine
-    #         App.ActiveDocument.recompute()
-    #     except:
-    #         print('App.ActiveDocument.recompute() failed')
-
-    # def onDocumentRestored(self, obj):
-        # self.execute(obj)
-        # pass
-
-    # https://wiki.freecad.org/FeaturePython_methods
     def onDocumentRestored(self, obj):
+        """
+        fix missing proxy issues
+        https://wiki.freecad.org/FeaturePython_methods
+        """
         obj.Proxy = self
 
 
@@ -219,16 +181,13 @@ class GPattach():
             plcResult = plcParent.multiply(plcOffset).multiply(plcChild_inv)
             obj.c3AttChildResultPlc = plcResult.Matrix
 
-            # in there is no expression inside ....
+            # is there custom expression inside ....
             if 'LinkPlacement' in [ ex[0] for ex in  obj.ExpressionEngine ]:
                 print ("custom expression in LinkPlacement - won't overwrite" )
             else:
                 # do your job
                 obj.LinkPlacement =  plcResult.Matrix
 
-
         else:
             print('cannot calculate final attachment')
 
-        ##
-        # pass
