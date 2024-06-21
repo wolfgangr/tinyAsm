@@ -219,7 +219,9 @@ class pySheet():
 
     # https://wiki.freecad.org/FeaturePython_methods
     def onDocumentRestored(self, obj):
+        print("in onDocumentRestored")
         obj.Proxy = self
+        # obj.cpy_cfg_reimport = True
 
     # # # # maybe this is what we need in 0.21.2 instead?
     # def dumps(self):
@@ -283,13 +285,9 @@ class pySheet():
             if match:
                 print ("changed:", prop)
                 m_sufx = match.group(1)
-## does this catch errors on restore?
                 if (m_sufx == 'prefix') or (m_sufx == 'modules'):
-                    if True: # getattr(self, 'spEvalidator', None):
-                        self.spEvalidator._update_modList()
-                        print ('updated modlist: ', self.spEvalidator.modlist)
-                    else:
-                        print("spEvalidator not yet instantiated")
+                    self.spEvalidator._update_modList()
+                    print ('updated modlist: ', self.spEvalidator.modlist)
                         # obj.cpy_cfg_reimport = True
 
                 elif (m_sufx == 'reimport'):
