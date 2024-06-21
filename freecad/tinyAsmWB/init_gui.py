@@ -33,10 +33,12 @@ except ImportError:
 import sys
 import os
 
+# source of extern commands to be used in buttons and menue
 import PartGui
 import SpreadsheetGui
+import SketcherGui
 
-
+# our own WB ecosystem
 from freecad.tinyAsmWB import commands
 import freecad.tinyAsmWB as tinyAsmWB
 from   freecad.tinyAsmWB import ICON_PATH
@@ -79,6 +81,9 @@ class tinyAsm (FreeCADGui.Workbench):
         collectedtoolbarcommands.extend(parttoolbarcommands)
 
         othercmds = [
+            # "Spreadsheet_CreateSheet",
+            'Sketcher_NewSketch',
+            'Sketcher_ReorientSketch',
             "Spreadsheet_CreateSheet",
         ]
         collectedtoolbarcommands.extend(othercmds)
