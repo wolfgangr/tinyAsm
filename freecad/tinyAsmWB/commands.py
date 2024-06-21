@@ -8,7 +8,7 @@ import FreeCAD    #  as App
 # Part....
 import AttachmentEditor
 
-
+import freecad.tinyAsmWB
 from freecad.tinyAsmWB import ICON_PATH
 from freecad.tinyAsmWB.tAcmd import *
 from freecad.tinyAsmWB.sheetExt import *
@@ -24,7 +24,7 @@ from freecad.tinyAsmWB.sheetExt import *
 #     "CutPlane",
 #     "CutShape"]
 
-_cmdList = [
+cmdList = [
         'bareLCS',
         # 'CreateCommonSheet',
         # "taPart_EditAttachment",
@@ -38,7 +38,18 @@ _cmdList = [
             # "Part_Primitives",
             # # "Part_Revolve",
             # "Part_EditAttachment",
+
+
     ]
+
+mycommands = [
+            "taGPInspector",
+            # "tiny_GPpart",
+            # "tiny_GPattach",
+            # "tiny_Solver",
+            # "tiny_Animator",
+            # "tiny_pySheet"
+        ]
 
 class BaseCommand(object):
 
@@ -74,9 +85,32 @@ class DatumLCS(BaseCommand):
 
 FreeCADGui.addCommand('bareLCS',DatumLCS())
 
+##
+#     "tiny_GPInspector",
 
+gpi = freecad.tinyAsmWB.tAcmd.LinkGPlcInsp
 
+class taGPins(BaseCommand):
 
+    def GetResources(self):
+        return {'Pixmap'  : os.path.join(ICON_PATH , 'myIcon.svg') ,
+                     'MenuText': "GPLink inspector" ,
+                     'ToolTip' : "retrieve GlobalPlacement\nof subelements\nof a linked Part"}
+
+    def Activated(self):
+        # FreeCAD.ActiveDocument.addObject('PartDesign::CoordinateSystem','LCS')
+        pass
+
+FreeCADGui.addCommand("taGPInspector", taGPins() )
+
+##
+        #     "tiny_GPInspector",
+        #     "tiny_GPpart",
+        #     "tiny_GPattach",
+        #     "tiny_Solver",
+        #     "tiny_Animator",
+        #     "tiny_pySheet"
+##
 
 # class Beam(BaseCommand):
 #

@@ -56,16 +56,18 @@ class tinyAsm (FreeCADGui.Workbench):
         """
         # import MyModuleA, MyModuleB # import here all the needed files that create your FreeCAD commands
 
-        mycommands = [
-            "tiny_GPInspector",
-            "tiny_GPpart",
-            "tiny_GPattach",
-            "tiny_Solver",
-            "tiny_Animator",
-            "tiny_pySheet"
-        ]
+        # mycommands = [
+        #     "tiny_GPInspector",
+        #     "tiny_GPpart",
+        #     "tiny_GPattach",
+        #     "tiny_Solver",
+        #     "tiny_Animator",
+        #     "tiny_pySheet"
+        # ]
 
-        collectedtoolbarcommands = commands._cmdList
+        mycommands = commands.mycommands
+
+        collectedtoolbarcommands = commands.cmdList
 
         parttoolbarcommands = [
             # "Part_CheckGeometry",
@@ -89,12 +91,12 @@ class tinyAsm (FreeCADGui.Workbench):
         collectedtoolbarcommands.extend(othercmds)
 
 
-        # self.appendToolbar("tiny Assembly Commands", mycommands)
+        self.appendToolbar("tinyAssembly", mycommands)
         self.appendToolbar("common Commands", collectedtoolbarcommands)
         # self.appendToolbar("common Commands", parttoolbarcommands)
 
         # self.appendMenu("My New Menu", self.list) # creates a new menu
-        # self.appendMenu("tiny Assembly Commands", mycommands)
+        self.appendMenu("tinyAssembly", mycommands)
         self.appendMenu("commonCmds", collectedtoolbarcommands)
         # self.appendMenu("commonCmds", parttoolbarcommands)
 
