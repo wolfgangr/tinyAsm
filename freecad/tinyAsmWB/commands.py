@@ -88,6 +88,7 @@ FreeCADGui.addCommand('bareLCS',DatumLCS())
 ##
 #     "tiny_GPInspector",
 
+
 gpi = freecad.tinyAsmWB.tAcmd.LinkGPlcInsp
 
 class taGPins(BaseCommand):
@@ -99,6 +100,8 @@ class taGPins(BaseCommand):
 
     def Activated(self):
         # FreeCAD.ActiveDocument.addObject('PartDesign::CoordinateSystem','LCS')
+        gpi.create_uGPL()
+        # ### TBD: check for selected Part?
         pass
 
 FreeCADGui.addCommand("taGPInspector", taGPins() )
