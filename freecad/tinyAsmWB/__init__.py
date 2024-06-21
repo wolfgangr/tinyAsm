@@ -35,3 +35,6 @@ ICON_PATH = os.path.join(DIR, "icons")
 
 
 print("... loading tinyAsmWB... Dummy")
+import freecad.tinyAsmWB as tinyAsmWB
+
+
