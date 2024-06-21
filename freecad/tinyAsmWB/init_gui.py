@@ -66,7 +66,7 @@ class tinyAsm (FreeCADGui.Workbench):
             # "Part_CheckGeometry",
             'Part_EditAttachment',
             "Part_Primitives",
-            "Part_Builder",
+            # "Part_Builder",
             # "Part_Cut",
             # "Part_Fuse",
             # "Part_Common",
