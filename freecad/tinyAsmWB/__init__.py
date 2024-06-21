@@ -37,10 +37,10 @@ ICON_PATH = os.path.join(DIR, "icons")
 print("... loading tinyAsmWB... Dummy")
 import freecad.tinyAsmWB as tinyAsmWB
 
-import freecad.tinyAsmWB.tAcmd
-from freecad.tinyAsmWB.tAcmd import *
-import freecad.tinyAsmWB.sheetExt
-from freecad.tinyAsmWB.sheetExt import *
+# import freecad.tinyAsmWB.tAcmd
+# from freecad.tinyAsmWB.tAcmd import *
+# import freecad.tinyAsmWB.sheetExt
+# from freecad.tinyAsmWB.sheetExt import *
 
 
 

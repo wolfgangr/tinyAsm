@@ -10,6 +10,9 @@ import AttachmentEditor
 
 
 from freecad.tinyAsmWB import ICON_PATH
+from freecad.tinyAsmWB.tAcmd import *
+from freecad.tinyAsmWB.sheetExt import *
+
 # from . import interaction, boxtools, bspline_tools
 # from . import fem2d
 # from . import screw_maker
