@@ -21,6 +21,12 @@ max_iter = 2 # how deep shall we follow link chains
 
 
 import FreeCAD as App
+
+try:
+    import FreeCADGui
+except ImportError:
+    print("GPInspector running in GUI-less mode")
+
 import os
 import re
 import datetime
@@ -111,7 +117,8 @@ def create_uGPL(obj_name = 'GPLinkInspector', arg_tgt = None):
             target = FreeCADGui.Selection.getSelection()[0]
             obj.inspectedObject = target
             # print(f"attached to surveillance of object: <{target.Name}>")
-        except:
+        except Exception as exc:
+            print (exc)
             print('no valid object selected, leave empty')
             pass
 
