@@ -44,6 +44,7 @@ cmdList = [
 
 mycommands = [
             "taGPInspector",
+            "taGPpart",
             # "tiny_GPpart",
             # "tiny_GPattach",
             # "tiny_Solver",
@@ -94,9 +95,9 @@ gpi = freecad.tinyAsmWB.tAcmd.LinkGPlcInsp
 class taGPins(BaseCommand):
 
     def GetResources(self):
-        return {'Pixmap'  : os.path.join(ICON_PATH , 'myIcon.svg') ,
-                     'MenuText': "GPLink inspector" ,
-                     'ToolTip' : "retrieve GlobalPlacement\nof subelements\nof a linked Part"}
+        return {'Pixmap'  : os.path.join(ICON_PATH , 'GPinsp.svg') ,
+                'MenuText': "GPLink inspector" ,
+                'ToolTip' : "retrieve GlobalPlacement\nof subelements\nof a linked Part"}
 
     # grey out unless a single link instance is selected
     # from Part/AttachmentEditor/Commands.py
@@ -121,8 +122,39 @@ class taGPins(BaseCommand):
 FreeCADGui.addCommand("taGPInspector", taGPins() )
 
 ##
-        #     "tiny_GPInspector",
-        #     "tiny_GPpart",
+#     "tiny_GPpart",
+
+gpp = freecad.tinyAsmWB.tAcmd.Part_maintGP
+
+class taGPpart(BaseCommand):
+
+    def GetResources(self):
+        return {'Pixmap'  : os.path.join(ICON_PATH , 'GPpart.svg') ,
+                'MenuText': "GPpart " ,
+                'ToolTip' : "Part container to be linked\nmaintains dependend GPinspectors"}
+
+    # grey out unless a single part instance is selected
+    # from Part/AttachmentEditor/Commands.py
+    def IsActive(self):
+        sel = FreeCADGui.Selection.getSelectionEx()
+
+        if len(sel) == 1:
+            if hasattr(sel[0].Object,"Placement"):
+                if hasattr(sel[0].Object, "Group"):
+                    self.selection = sel[0].Object
+                    return True
+
+        self.selection = None
+        return False
+
+    def Activated(self):
+        gpp.create_GPpart()
+        # pass
+
+FreeCADGui.addCommand("taGPpart", taGPpart() )
+
+
+##
         #     "tiny_GPattach",
         #     "tiny_Solver",
         #     "tiny_Animator",

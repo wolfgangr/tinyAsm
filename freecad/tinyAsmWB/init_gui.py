@@ -1,3 +1,4 @@
+"""FreeCADGui init script of tinyAsm module"""
 # ***************************************************************************
 # *    Copyright (c) 2024 Wolfgang Rosner wolfgangr@github.com              *
 # *                                                                         *
@@ -54,16 +55,8 @@ class tinyAsm (FreeCADGui.Workbench):
         """This function is executed when the workbench is first activated.
         It is executed once in a FreeCAD session followed by the Activated function.
         """
-        # import MyModuleA, MyModuleB # import here all the needed files that create your FreeCAD commands
 
-        # mycommands = [
-        #     "tiny_GPInspector",
-        #     "tiny_GPpart",
-        #     "tiny_GPattach",
-        #     "tiny_Solver",
-        #     "tiny_Animator",
-        #     "tiny_pySheet"
-        # ]
+
 
         mycommands = commands.mycommands
 
