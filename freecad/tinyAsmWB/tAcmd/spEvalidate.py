@@ -106,7 +106,7 @@ class sheetPyCEvalidator:
         # global ref_globals
 
         # fl = {}
-        fl = self.taFunclist
+        fl = self.taFunclist.copy()  # otherwise dict gets changed
         for key, value in self.modlist.items():
 
             # resemble the behaviour of 'import value as key'
