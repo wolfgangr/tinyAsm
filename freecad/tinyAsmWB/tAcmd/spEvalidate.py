@@ -39,6 +39,12 @@ import sys
 
 # ref_globals = globals()
 
+# mod level functions
+# freecad/tinyAsmWB/sheetExt/sheetPyMods_base.py
+# freecad/tinyAsmWB/sheetExt/trianglesolver.py
+import freecad.tinyAsmWB.tAcmd.taModSheetFunctions as taModSheetFunctions
+
+
 class sheetPyCEvalidator:
     """ implement evalidate and associated model for sheetPythonCustom """
     def __init__(self, sheet=None,
@@ -52,6 +58,7 @@ class sheetPyCEvalidator:
 
         self.ready = False
 
+        self.taFunclist = taModSheetFunctions.getTAfunclist()
         self.modlist  = {}
         self.funclist = {}
         self.accsFlist = {}
@@ -98,7 +105,8 @@ class sheetPyCEvalidator:
 
         # global ref_globals
 
-        fl = {}
+        # fl = {}
+        fl = self.taFunclist
         for key, value in self.modlist.items():
 
             # resemble the behaviour of 'import value as key'
