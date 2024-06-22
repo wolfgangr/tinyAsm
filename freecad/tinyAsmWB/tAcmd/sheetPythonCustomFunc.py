@@ -216,7 +216,7 @@ class pySheet():
                 CONST_CFG_prefix + '_modules'   ,
                 CONST_CFG_prefix + '_functions' ,
                 CONST_CFG_prefix + '_reimport'    )
-        print ('sheet functions packaged w/ tinyAsm: ',  self.spEvalidator.taFunclist() )
+        print ('sheet functions packaged w/ tinyAsm: \n',  self.spEvalidator.pp_taFunclist() )
 
     # https://wiki.freecad.org/FeaturePython_methods
     def onDocumentRestored(self, obj):
@@ -296,10 +296,10 @@ class pySheet():
                         ##
                         print('reimporting modules...')
                         self.spEvalidator._update_funcList()
-                        print ('updated list of available functions: ', self.spEvalidator.pp_funclist() )
+                        print ('updated list of available functions:\n', self.spEvalidator.pp_funclist() )
                         setattr(obj, prop, False)
                         self.spEvalidator.update_accesibleFuncs()
-                        print ('updated list of selected functions: ',  self.spEvalidator.accsFlist() )
+                        print ('updated list of selected functions:\n',  self.spEvalidator.pp_accsFlist() )
 
                     obj.touch()
 

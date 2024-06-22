@@ -47,8 +47,9 @@ def _ppFunclist(fl):
     """ pretty print function list
         key : __module__
     """
-    func2mod = [ (key, value.__module__) for key, value in fl.items() ]
+    func2mod = [ (key ,value.__module__)  for key, value in fl.items() ]
     return pformat(func2mod)
+    # return func2mod
 
 class sheetPyCEvalidator:
     """ implement evalidate and associated model for sheetPythonCustom """
@@ -70,13 +71,13 @@ class sheetPyCEvalidator:
 
     #
 
-    def pp_taFunclist():
+    def pp_taFunclist(self):
         return _ppFunclist(self.taFunclist)
 
-    def pp_funclist():
+    def pp_funclist(self):
         return _ppFunclist(self.funclist)
 
-    def pp_accsFlist():
+    def pp_accsFlist(self):
         return _ppFunclist(self.accsFlist)
 
 ##
