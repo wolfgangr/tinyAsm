@@ -1,11 +1,13 @@
-# (c) Wolfgang Rosner 2024 - wolfagngr@github.com
-# License: LGPL 2+
+"""restricted eval implementation for spreadsheet user defined functions
+
+(c) Wolfgang Rosner 2024 - wolfagngr@github.com
+License: LGPL 2+
+
 # https://github.com/wolfgangr/myTinyAsm/blob/master/spEvalidate.py
 #
 # inspired by evalidate, but finally implemented without
 #   see https://github.com/yaroslaff/evalidate
 
-"""restricted eval implementation for spreadsheet user defined functions
 
 Security considerations:
 - implement FreeCAD Policy 'separate Code from Data'
@@ -36,14 +38,17 @@ as this is open in all over FreeCAD anyway.
 import importlib
 import re
 import sys
+from pprint import pformat
 
-# ref_globals = globals()
-
-# mod level functions
-# freecad/tinyAsmWB/sheetExt/sheetPyMods_base.py
-# freecad/tinyAsmWB/sheetExt/trianglesolver.py
+# gets packaged function with tiny Assembly WB mod as default:
 import freecad.tinyAsmWB.tAcmd.taModSheetFunctions as taModSheetFunctions
 
+def _ppFunclist(fl):
+    """ pretty print function list
+        key : __module__
+    """
+    func2mod = [ (key, value.__module__) for key, value in fl.items() ]
+    return pformat(func2mod)
 
 class sheetPyCEvalidator:
     """ implement evalidate and associated model for sheetPythonCustom """
@@ -63,8 +68,20 @@ class sheetPyCEvalidator:
         self.funclist = {}
         self.accsFlist = {}
 
-    # caller interface to substitute open 'eval'
+    #
+
+    def pp_taFunclist():
+        return _ppFunclist(self.taFunclist)
+
+    def pp_funclist():
+        return _ppFunclist(self.funclist)
+
+    def pp_accsFlist():
+        return _ppFunclist(self.accsFlist)
+
+##
     def sPeval(self, funcnam, *params) :
+        """ caller interface to substitute open 'eval' """
 
         self.make_ready() # ensure that our machinery is up to date
 
@@ -75,10 +92,11 @@ class sheetPyCEvalidator:
         else:
             return None
 
-    # parse, sanitize and aggregate user module selection in subset of Macro Path
+  ##
     def _update_modList(self):
-        # FreeCAD.getUserMacroDir(True)
-        ml = {}  # => import value as key
+        """ parse, sanitize and aggregate user module selection in subset of Macro Path """
+
+        ml = {}
 
         pref = getattr(self.sheet, self.prefix, '')
         if pref:
@@ -100,16 +118,12 @@ class sheetPyCEvalidator:
         if ml:
             self.modlist = ml
 
-    # import user defined modules and get available functions
     def _update_funcList(self):
+        """ import user defined modules and get available functions """
 
-        # global ref_globals
-
-        # fl = {}
         fl = self.taFunclist.copy()  # otherwise dict gets changed
         for key, value in self.modlist.items():
 
-            # resemble the behaviour of 'import value as key'
             mod = sys.modules.get(value)
 
             if mod:                     # already imported
@@ -117,15 +131,11 @@ class sheetPyCEvalidator:
 
             else:                       #  if still unknown
                 try:
-                    # import value as key
                     mod = importlib.import_module(value)
-                    # globals()[key] = mod
-                    # ref_globals[key] = mod
                 except:
                     print(f"failed to:  import {value} as {key} ")
 
             if mod:
-                # mod.__dict__.keys()
                 # filter out '__dunders__' to get function candidates
                 for fcname, fcval in mod.__dict__.items():
                     if  re.match(r"^__[\w]+__$", fcname):
@@ -136,8 +146,9 @@ class sheetPyCEvalidator:
         if fl:
                 self.funclist = fl
 
-    # filter all functions in funclist() by user selection
+
     def accessibleFunctions(self):
+        """ filter all functions in funclist() by user selection """
         return  { fname: fref
                     for (fname, fref) in self.funclist.items()
                     if fname in self.sheet.cpy_cfg_functions
