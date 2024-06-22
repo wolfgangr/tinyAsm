@@ -13,12 +13,6 @@ License: LGPL 2+
 
 # ======================================
 #   config
-# icon_rel_path = "/icons/PartLinkGlobalPlacementGetter.svg"
-# icon_rel_path = "/../icons/GPinsp.svg"
-
-# parameter_group_name = "Inspect_global_placement"
-# parameter_group_name = "GPget" # no trailing _ !
-
 parameter_group_name = "GP" # no trailing _ !
 tooltip = "retrieved Global Placement of sub-Object - read only"
 max_iter = 2 # how deep shall we follow link chains
@@ -39,15 +33,12 @@ import datetime
 
 from freecad.tinyAsmWB import ICON_PATH
 
-# # https://stackoverflow.com/questions/52778687/nameerror-file-is-not-defined
-# def dummy(): pass
-# script_path = (dummy.__code__.co_filename)
-# filePath = os.path.dirname(script_path)     # (__file__)
-# iconPath = filePath + icon_rel_path
-# # print ('iconPath:', iconPath)
+##
 
-# follow link chain until we find an object with a Group property
+
 def traverse_link_chain(lnk):
+    """ follow link chain until we find an object with a Group property """
+
     cnt_iter = max_iter
     frontier = lnk
 
@@ -69,9 +60,9 @@ def traverse_link_chain(lnk):
             raise ValueError("Link chain limit exceeded")
 
 
-# https://wiki.freecad.org/FeaturePython_Custom_Properties
 def sync_GPParams(obj_svtr, obj_svnd, pgname = parameter_group_name):
-    # param List is kept as property of surveilling object
+    """ param List is kept as property of surveilling object """
+
     old_PL = obj_svtr.inspectedSubobjectList
 
     # .. and has to match subobject List of object under surveillance
@@ -137,7 +128,7 @@ def create_uGPL(obj_name = 'GPLinkInspector', arg_tgt = None):
 ##
 
 class taGPiViewProvider:
-    ''' basic defs '''
+    ''' basic defs to get a custom icon in tree view'''
 
     def __init__(self, obj):
         obj.Proxy = self
@@ -151,11 +142,11 @@ class taGPiViewProvider:
         vobj.addDisplayMode(self.standard,"Standard");
 
     def getDisplayModes(self,obj):
-        "'''Return a list of display modes.'''"
+        """Return a list of display modes."""
         return ["Standard"]
 
     def getDefaultDisplayMode(self):
-        "'''Return the name of the default display mode. It must be defined in getDisplayModes.'''"
+        """Return the name of the default display mode. It must be defined in getDisplayModes."""
         return "Standard"
 
 ##
