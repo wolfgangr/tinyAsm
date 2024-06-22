@@ -14,7 +14,7 @@ License: LGPL 2+
 # ======================================
 #   config
 # icon_rel_path = "/icons/PartLinkGlobalPlacementGetter.svg"
-icon_rel_path = "/../icons/GPinsp.svg"
+# icon_rel_path = "/../icons/GPinsp.svg"
 
 # parameter_group_name = "Inspect_global_placement"
 # parameter_group_name = "GPget" # no trailing _ !
@@ -29,6 +29,7 @@ import FreeCAD as App
 
 try:
     import FreeCADGui
+    from pivy import coin
 except ImportError:
     print("GPInspector running in GUI-less mode")
 
@@ -36,12 +37,14 @@ import os
 import re
 import datetime
 
-# https://stackoverflow.com/questions/52778687/nameerror-file-is-not-defined
-def dummy(): pass
-script_path = (dummy.__code__.co_filename)
-filePath = os.path.dirname(script_path)     # (__file__)
-iconPath = filePath + icon_rel_path
-# print ('iconPath:', iconPath)
+from freecad.tinyAsmWB import ICON_PATH
+
+# # https://stackoverflow.com/questions/52778687/nameerror-file-is-not-defined
+# def dummy(): pass
+# script_path = (dummy.__code__.co_filename)
+# filePath = os.path.dirname(script_path)     # (__file__)
+# iconPath = filePath + icon_rel_path
+# # print ('iconPath:', iconPath)
 
 # follow link chain until we find an object with a Group property
 def traverse_link_chain(lnk):
@@ -131,6 +134,32 @@ def create_uGPL(obj_name = 'GPLinkInspector', arg_tgt = None):
     # App.ActiveDocument.recompute()
     return obj
 
+##
+
+class taGPiViewProvider:
+    ''' basic defs '''
+
+    def __init__(self, obj):
+        obj.Proxy = self
+        # self.Object = obj
+
+    def getIcon(self):
+        return os.path.join(ICON_PATH , 'GPinsp.svg')
+
+    def attach(self, vobj):
+        self.standard = coin.SoGroup()
+        vobj.addDisplayMode(self.standard,"Standard");
+
+    def getDisplayModes(self,obj):
+        "'''Return a list of display modes.'''"
+        return ["Standard"]
+
+    def getDefaultDisplayMode(self):
+        "'''Return the name of the default display mode. It must be defined in getDisplayModes.'''"
+        return "Standard"
+
+##
+
 class GPLinkInspector():
     def __init__(self, obj):
         """
@@ -138,6 +167,8 @@ class GPLinkInspector():
         """
         self.Type = 'GPLinkInspector'
         obj.Proxy = self
+        taGPiViewProvider(obj.ViewObject)
+
         # obj.addProperty('App::PropertyString', 'Description', 'Base', 'Box description')
         obj.addProperty("App::PropertyLink", "inspectedObject", "Base",
             'The object whose subobjects real global placment values shall be retrieved')
