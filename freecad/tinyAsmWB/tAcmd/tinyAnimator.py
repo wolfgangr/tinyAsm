@@ -1,3 +1,9 @@
+""" freecad/tinyAsmWB/tAcmd/tinyAnimator.py
+
+(c) Wolfgang Rosner 2024 - wolfagngr@github.com
+License: LGPL 2+
+
+"""
 
 import FreeCAD
 import FreeCADGui
@@ -38,7 +44,7 @@ def create_tinyAnimator(obj_name = 'tinyAnimator'):
     obj = FreeCAD.ActiveDocument.addObject('App::FeaturePython', obj_name)
     tinyAnimator(obj)
 
-    App.ActiveDocument.recompute()
+    FreeCAD.ActiveDocument.recompute()
     return obj
 
 ##

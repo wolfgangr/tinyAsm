@@ -1,5 +1,13 @@
+"""
+freecad/tinyAsmWB/commands.py
 
-# boilerplated from beam WB and Manipulator WB
+(c) Wolfgang Rosner 2024 - wolfagngr@github.com
+License: LGPL 2+
+
+boilerplated from beam WB and Manipulator WB
+
+"""
+
 import os
 
 import FreeCADGui #  as Gui
@@ -47,6 +55,7 @@ mycommands = [
             "taGPpart",
             "taGPattach",
             "taPySheet",
+            "taAnimator",
             # "tiny_pySheet"
             # "tiny_Solver",
             # "tiny_Animator",
@@ -194,10 +203,28 @@ class taPySheet(BaseCommand):
         # pass
 
 FreeCADGui.addCommand( "taPySheet", taPySheet() )
-##
-
-        #     "tiny_Solver",
-        #     "tiny_Animator",
 
 ##
+#     "tiny_Animator",
 
+gpAnim = freecad.tinyAsmWB.tAcmd.tinyAnimator
+
+class taAnimator(BaseCommand):
+
+    def GetResources(self):
+        return {'Pixmap'  : os.path.join(ICON_PATH , 'taAnimator.svg') ,
+                'MenuText': "simple Animator" ,
+                'ToolTip' : "FeaturePythonObject with runnable Property"}
+
+    def Activated(self):
+        gpAnim.create_tinyAnimator(obj_name = 'taAnimator')
+        # pass
+
+FreeCADGui.addCommand( "taAnimator", taAnimator() )
+
+
+
+
+
+##
+#     "tiny_Solver",
