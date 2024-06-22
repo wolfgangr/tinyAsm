@@ -7,6 +7,7 @@ License: LGPL 2+
 
 import FreeCAD
 import FreeCADGui
+from pivy import coin
 from PySide import QtCore
 import os
 
@@ -93,10 +94,22 @@ class taAnimatorViewProvider:
 
     def __init__(self, obj):
         obj.Proxy = self
-        self.Object = obj
+        # self.Object = obj
 
     def getIcon(self):
         return os.path.join(ICON_PATH , 'taAnimator.svg')
+
+    def attach(self, vobj):
+        self.standard = coin.SoGroup()
+        vobj.addDisplayMode(self.standard,"Standard");
+
+    def getDisplayModes(self,obj):
+        "'''Return a list of display modes.'''"
+        return ["Standard"]
+
+    def getDefaultDisplayMode(self):
+        "'''Return the name of the default display mode. It must be defined in getDisplayModes.'''"
+        return "Standard"
 
 ##
 
