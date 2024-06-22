@@ -35,7 +35,7 @@
      inkscape:window-x="2"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer5" />
+     inkscape:current-layer="layer2" />
   <defs
      id="defs2862">
     <linearGradient
@@ -215,7 +215,7 @@
      inkscape:label="Layer 2"
      style="display:inline">
     <g
-       transform="translate(-0.18128364,1.1321524)"
+       transform="matrix(1.0520171,0,0,1.3224622,-1.8522212,-10.027576)"
        id="layer1">
       <rect
          style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#ffffff;stroke:#2e3436;stroke-width:4;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
@@ -260,7 +260,7 @@
      style="display:inline">
     <g
        id="g1166"
-       transform="translate(-83.525424,-7.3220339)">
+       transform="matrix(1.1325748,0,0,1.0385915,-91.286443,-8.9463538)">
       <g
          style="display:inline;stroke-width:2"
          id="g40"
@@ -326,7 +326,7 @@
      inkscape:label="Layer 3">
     <g
        id="g1259"
-       transform="matrix(0.8,0,0,0.8,-6.8174854,17.131899)">
+       transform="matrix(1.1232413,0,0,1.1088996,-31.675218,3.118369)">
       <g
          transform="matrix(1,0,0,1.6409028,0,-22.399398)"
          id="g1233">
