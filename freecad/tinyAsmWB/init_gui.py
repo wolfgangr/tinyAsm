@@ -48,8 +48,7 @@ class tinyAsm (FreeCADGui.Workbench):
 
     MenuText = "tiny Asm"
     ToolTip = "minimalistic datum based Assembly toolbox"
-    # Icon = """ this BS throws error at loading tinyAsm Gui paste here the contents of a 16x16 xpm icon"""
-    Icon = os.path.join(ICON_PATH , 'myIcon.svg')
+    Icon = os.path.join(ICON_PATH , 'tinyAsmWB.svg')
 
     def Initialize(self):
         """This function is executed when the workbench is first activated.

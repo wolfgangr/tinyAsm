@@ -25,10 +25,8 @@ import Spreadsheet
 from ast import literal_eval
 
 # my own sanitized function eval
-# import dev.myTinyAsm.spEvalidate as spEvalidate
-
 import freecad.tinyAsmWB.tAcmd.spEvalidate as spEvalidate
-# from   freecad.tinyAsmWB import ICON_PATH
+from freecad.tinyAsmWB import ICON_PATH
 
 
 # import xml.sax
@@ -165,6 +163,9 @@ class pySheetViewProvider:
     def __init__(self, obj):
         # obj.Proxy = self
         self.Object = obj
+
+    def getIcon(self):
+        return os.path.join(ICON_PATH , 'PySheet.svg')
 
 ##
 
