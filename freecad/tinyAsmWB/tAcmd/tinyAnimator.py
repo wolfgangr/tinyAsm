@@ -8,9 +8,9 @@ License: LGPL 2+
 import FreeCAD
 import FreeCADGui
 from PySide import QtCore
-# import threading
-# import time
-# import asyncio
+import os
+
+from freecad.tinyAsmWB import ICON_PATH
 
 
 
@@ -88,6 +88,18 @@ def nextIteration(obj):
 
 ##
 
+class taAnimatorViewProvider:
+    ''' basic defs '''
+
+    def __init__(self, obj):
+        obj.Proxy = self
+        self.Object = obj
+
+    def getIcon(self):
+        return os.path.join(ICON_PATH , 'taAnimator.svg')
+
+##
+
 class tinyAnimator():
     def __init__(self, obj):
         """
@@ -97,6 +109,7 @@ class tinyAnimator():
 
         self.Type = 'tinyAnimator'
         obj.Proxy = self
+        taAnimatorViewProvider(obj.ViewObject)
 
 
         # properties

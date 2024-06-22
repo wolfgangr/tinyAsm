@@ -112,9 +112,10 @@ class tinyAsm (FreeCADGui.Workbench):
         # This is not a template, the returned string should be exactly "Gui::PythonWorkbench"
         return "Gui::PythonWorkbench"
 
-try:    # for development: readd WB in running FC
-    FreeCADGui.removeWorkbench('tinyAsm')
-except:
-    print("DEBUG ### cannot remove Workbench 'tinyAsm' ")
+# try:    # for development: readd WB in running FC
+#     FreeCADGui.removeWorkbench('tinyAsm')
+# except:
+#     print("DEBUG ### cannot remove Workbench 'tinyAsm' ")
 
 FreeCADGui.addWorkbench(tinyAsm)
+print("tinyAsmWB initialized GUI")
