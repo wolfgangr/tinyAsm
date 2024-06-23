@@ -15,6 +15,13 @@ License: LGPL 2+
 """
 
 import FreeCAD as App
+
+try:
+    import FreeCADGui
+    from pivy import coin
+except ImportError:
+    print("GPInspector running in GUI-less mode")
+
 import os
 import re
 # import datetime
@@ -163,6 +170,21 @@ class pySheetViewProvider:
     def __init__(self, obj):
         # obj.Proxy = self
         self.Object = obj
+
+    def attach(self, obj):
+        """
+        Setup the scene sub-graph of the view provider, this method is mandatory
+        """
+        self.standard = coin.SoGroup()
+        vobj.addDisplayMode(self.standard,"Standard");
+
+    def getDisplayModes(self,obj):
+        """Return a list of display modes."""
+        return ["Standard"]
+
+    def getDefaultDisplayMode(self):
+        """Return the name of the default display mode. It must be defined in getDisplayModes."""
+        return "Standard"
 
     def getIcon(self):
         return os.path.join(ICON_PATH , 'PySheet.svg')
