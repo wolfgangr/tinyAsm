@@ -312,18 +312,18 @@ class rkSolver():
         self.resetModel(obj)
         # self.execute(obj)
 
-    def onChanged(self, obj, prop):
-        """ recompute upon change in solve_now """
-
-        match prop:
-            case 'solve_now':
-                obj.touch()
-                obj.Document.recompute()
-                FreeCADGui.updateGui()
-
-            case _:
-                # print (f'debug: Property {prop} changed - no special handling')
-                pass
+    # def onChanged(self, obj, prop):
+    #     """ recompute upon change in solve_now """
+    #
+    #     match prop:
+    #         case 'solve_now':
+    #             obj.touch()
+    #             obj.Document.recompute()
+    #             FreeCADGui.updateGui()
+    #
+    #         case _:
+    #             # print (f'debug: Property {prop} changed - no special handling')
+    #             pass
 
 
     def execute(self, obj):
@@ -333,17 +333,26 @@ class rkSolver():
         """
         print('Recomputing {0:s} ({1:s})'.format(obj.Name, self.Type))
 
+        # are we started?
         if not getattr(obj, "solve_now", None):
+            return None
+
+        # are we configured?
+        input   =  obj.ModelInRef
+        output  =  obj.ModelOutRef
+        if (not input) or (not output):
+            print("model in / out ref not configured")
+            setattr(obj, "solve_now", False)
             return None
 
         t0 = time.perf_counter(), time.process_time()
 
         model = wrapModel(
                 solvBase = obj,
-                input   =  obj.ModelInRef,
-                inprop  = 'ModelInVector',            # obj.ModelInVector,
-                output  =  obj.ModelOutRef,
-                outprop = 'ModelOutPlacement',       # obj.ModelOutPlacement,
+                input   =  input,                   # obj.ModelInRef,
+                inprop  = 'ModelInVector',          # obj.ModelInVector,
+                output  =  output,                  # obj.ModelOutRef,
+                outprop = 'ModelOutPlacement',      # obj.ModelOutPlacement,
                 target  =  obj.TargetPlacement,
                 clen    =  obj.Clen
             )
