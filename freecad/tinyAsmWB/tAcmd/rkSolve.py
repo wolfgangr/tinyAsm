@@ -118,6 +118,19 @@ class wrapModel:
 
         # self.t0 = time.perf_counter(), time.process_time()
 
+    def check_setup(self):
+        """ check model valididy to avoid exceptions during setup """
+        # if not self.inProp:
+        #     print("input property not configured")
+        #     return False
+        if not self.iObj:
+            print("input Object not configured")
+            return False
+        if not self.oObj:
+            print("output Object not configured")
+            return False
+        # else:
+            return True
 
     def callModel(self, vect_in):
         # print  (list(vect_in))
@@ -357,7 +370,16 @@ class rkSolver():
                 clen    =  obj.Clen
             )
 
+        if not model.check_setup():
+            print("   ... aborting solver")
+            setattr(obj, "solve_now", False)
+            return None
+
         startVec = obj.StartVector
+        if  len(startVec) != 6:
+            print("len(start Vector) != 6 .... aborting solver")
+            setattr(obj, "solve_now", False)
+            return None
 
         t1 = time.perf_counter(), time.process_time()
 
