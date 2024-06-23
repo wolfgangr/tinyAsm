@@ -94,7 +94,7 @@ class taAnimatorViewProvider:
 
     def __init__(self, obj):
         obj.Proxy = self
-        # self.Object = obj
+        self.vObject = obj
 
     def attach(self, vobj):
         self.standard = coin.SoGroup()
@@ -111,7 +111,7 @@ class taAnimatorViewProvider:
     # start/stop by double click in tree view, change icon
     def getIcon(self):
         icon_stopped = os.path.join(ICON_PATH , 'taAnimator.svg')
-        icon_running = os.path.join(ICON_PATH , 'taAnimatorRunc.svg')
+        icon_running = os.path.join(ICON_PATH , 'taAnimatorRun.svg')
         if self._isAnimating():
             return icon_running
         else:
@@ -120,7 +120,7 @@ class taAnimatorViewProvider:
     def _isAnimating(self):
         """ surface the 'run_now' property of the Base object """
         # console: getattr(obj.ViewObject.Object, 'run_now', False)
-        animator = self.Object
+        animator = self.vObject.Object
         rv = getattr(animator, 'run_now', False)
         return rv
 
@@ -130,7 +130,8 @@ class taAnimatorViewProvider:
         # does this help us here? or must we hook to the Base object?
         # if prop == "StartAnimating" or prop == "StopAnimating":
         print("taAnimatorViewProvider.updateData.prop: ", prop)
-        fp.ViewObject.signalChangeIcon()
+        if prop == 'run_now':
+            fp.ViewObject.signalChangeIcon()
 
 
 ##
