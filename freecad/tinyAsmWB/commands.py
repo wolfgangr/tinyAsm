@@ -14,40 +14,19 @@ import FreeCADGui #  as Gui
 import FreeCAD    #  as App
 
 # Part....
-import AttachmentEditor
+# import AttachmentEditor
 
 import freecad.tinyAsmWB
 from freecad.tinyAsmWB import ICON_PATH
 from freecad.tinyAsmWB.tAcmd import *
 from freecad.tinyAsmWB.sheetExt import *
 
-# from . import interaction, boxtools, bspline_tools
-# from . import fem2d
-# from . import screw_maker
-#
-#
-# __all__ = [
-#     "Beam",
-#     "CutMiter",
-#     "CutPlane",
-#     "CutShape"]
-
-cmdList = [
-        'bareLCS',
-        # 'CreateCommonSheet',
-        # "taPart_EditAttachment",
-            # # "Part_CheckGeometry",
-            # # "Part_Builder",
-            # # "Part_Cut",
-            # # "Part_Fuse",
-            # # "Part_Common",
-            # "Sketcher_NewSketch",
-            # "Part_Extrude",
-            # "Part_Primitives",
-            # # "Part_Revolve",
-            # "Part_EditAttachment",
+##
 
 
+cmdList = [             # extern commands
+        'bareLCS',      # with own icon and w/o PD overhead
+        # all other the short way in init_gui
     ]
 
 mycommands = [
@@ -56,11 +35,10 @@ mycommands = [
             "taGPattach",
             "taPySheet",
             "taAnimator",
-            # "tiny_pySheet"
-            # "tiny_Solver",
-            # "tiny_Animator",
+            "taSolver",
+    ]
 
-        ]
+##
 
 class BaseCommand(object):
 
@@ -126,8 +104,6 @@ class taGPins(BaseCommand):
     def Activated(self):
         # FreeCAD.ActiveDocument.addObject('PartDesign::CoordinateSystem','LCS')
         gpi.create_uGPL(obj_name = 'taGPinsp', arg_tgt = self.selection)
-        # ### TBD: check for selected Part?
-        pass
 
 FreeCADGui.addCommand("taGPInspector", taGPins() )
 
@@ -145,7 +121,6 @@ class taGPpart(BaseCommand):
 
     def Activated(self):
         gpp.create_GPpart()
-        # pass
 
 FreeCADGui.addCommand("taGPpart", taGPpart() )
 
@@ -162,8 +137,7 @@ class taGPattach(BaseCommand):
                 'MenuText': "GPattach" ,
                 'ToolTip' : "attach one Container to another\nby matching placement of sub-objects\nfirst selection: Child\nsecond selection: Parent"}
 
-    # grey out unless a single link instance is selected
-    # from Part/AttachmentEditor/Commands.py
+    # grey out unless two instances are selected
     def IsActive(self):
         sel = FreeCADGui.Selection.getSelectionEx()
 
@@ -177,11 +151,7 @@ class taGPattach(BaseCommand):
         return False
 
     def Activated(self):
-        # FreeCAD.ActiveDocument.addObject('PartDesign::CoordinateSystem','LCS')
-        # gpi.create_uGPL(obj_name = 'taGPinsp', arg_tgt = self.selection)
         gpa.create_GPatt(obj_name='taGPattach')
-        # ### TBD: check for selected Part?
-        pass
 
 FreeCADGui.addCommand("taGPattach", taGPattach() )
 
@@ -200,7 +170,6 @@ class taPySheet(BaseCommand):
 
     def Activated(self):
         gps.create_pySheet()
-        # pass
 
 FreeCADGui.addCommand( "taPySheet", taPySheet() )
 
@@ -218,13 +187,28 @@ class taAnimator(BaseCommand):
 
     def Activated(self):
         gpAnim.create_tinyAnimator(obj_name = 'taAnimator')
-        # pass
 
 FreeCADGui.addCommand( "taAnimator", taAnimator() )
 
 
-
-
-
 ##
 #     "tiny_Solver",
+
+gpSolve = freecad.tinyAsmWB.tAcmd.rkSolve
+
+class taSolver(BaseCommand):
+
+    def GetResources(self):
+        return {'Pixmap'  : os.path.join(ICON_PATH , 'taSolver.svg') ,
+                'MenuText': "reverse kinematic solver" ,
+                'ToolTip' : "given \n- a FreeCAD project with 6 DoF\n"
+                    + "- a target object to be placed\n"
+                    + "- a target placement value"
+                    + "solver modifies tht model DoF until placement matches\n"
+                    + "(uses scipy.optimize.fsolve)"
+                }
+
+    def Activated(self):
+        gpSolve.create_rkSolver(obj_name = 'taSolver')
+
+FreeCADGui.addCommand( "taSolver", taSolver() )
