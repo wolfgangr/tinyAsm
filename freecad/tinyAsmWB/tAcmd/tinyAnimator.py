@@ -96,9 +96,6 @@ class taAnimatorViewProvider:
         obj.Proxy = self
         # self.Object = obj
 
-    def getIcon(self):
-        return os.path.join(ICON_PATH , 'taAnimator.svg')
-
     def attach(self, vobj):
         self.standard = coin.SoGroup()
         vobj.addDisplayMode(self.standard,"Standard");
@@ -110,6 +107,31 @@ class taAnimatorViewProvider:
     def getDefaultDisplayMode(self):
         "'''Return the name of the default display mode. It must be defined in getDisplayModes.'''"
         return "Standard"
+
+    # start/stop by double click in tree view, change icon
+    def getIcon(self):
+        icon_stopped = os.path.join(ICON_PATH , 'taAnimator.svg')
+        icon_running = os.path.join(ICON_PATH , 'taAnimatorRunc.svg')
+        if self._isAnimating():
+            return icon_running
+        else:
+            return icon_stopped
+
+    def _isAnimating(self):
+        """ surface the 'run_now' property of the Base object """
+        # console: getattr(obj.ViewObject.Object, 'run_now', False)
+        animator = self.Object
+        rv = getattr(animator, 'run_now', False)
+        return rv
+
+
+    def updateData(self, fp, prop):
+        '''If a property of the handled feature has changed we have the chance to handle this here'''
+        # does this help us here? or must we hook to the Base object?
+        # if prop == "StartAnimating" or prop == "StopAnimating":
+        print("taAnimatorViewProvider.updateData.prop: ", prop)
+        fp.ViewObject.signalChangeIcon()
+
 
 ##
 
