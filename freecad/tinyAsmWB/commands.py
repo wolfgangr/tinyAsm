@@ -201,10 +201,11 @@ class taSolver(BaseCommand):
     def GetResources(self):
         return {'Pixmap'  : os.path.join(ICON_PATH , 'taSolver.svg') ,
                 'MenuText': "reverse kinematic solver" ,
-                'ToolTip' : "given \n- a FreeCAD project with 6 DoF\n"
+                'ToolTip' : "given \n"
+                    + "- a FreeCAD project with 6 DoF\n"
                     + "- a target object to be placed\n"
-                    + "- a target placement value"
-                    + "solver modifies tht model DoF until placement matches\n"
+                    + "- a target placement value\n"
+                    + "solver modifies the model's DoF\n  until placement matches\n"
                     + "(uses scipy.optimize.fsolve)"
                 }
 
