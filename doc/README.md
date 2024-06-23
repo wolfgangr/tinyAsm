@@ -93,6 +93,14 @@ In the ### example tbd #### some siplified acutator leg is calculated, as it may
 
 for further details see example ### tbd ###
 
-## Tiny Animator
+## taAnimator - Tiny Animator
+FreeCAD ships ### tbd ### animator macro with extended functions, but a somtimes hard to manage user interface. Another Addon ### tbd ### is even more rich of features far beyond simple kinematic visualisation.
+
+Assembly4 ships a tiny nice animator with a decent Gui, however limitied to Assembly4-proprietary "variables".
+The tinyAsm animator strives to match the functionality of Assembly4 animator. It refraines however from supplying an own Gui to match k.i.s.s. All configuration is supplied by builtin Ui in feature properties. Only start/stop with a toggling icon is bound to tree view.
+
+Details see example ### tbd ###
+
+
 # Common Functions aliased in Menue and Toolbar
 `tinyAsm` does not try to reinvent the wheel. So wherever FreeCAD builtin feature meet the requirements, they are supposed to be preferred. From Experience at the time of development, the following features are aliased in `tinyAsm` to avoid permanent switching of Workbenches. 
