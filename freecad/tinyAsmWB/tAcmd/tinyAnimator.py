@@ -117,6 +117,17 @@ class taAnimatorViewProvider:
         else:
             return icon_stopped
 
+    def updateData(self, fp, prop):
+        '''If a property of the handled feature has changed we have the chance to handle this here'''
+        # fp is the underlying Base object?
+        # if prop == "StartAnimating" or prop == "StopAnimating":
+        # print("taAnimatorViewProvider.updateData.prop: ", prop)
+        if prop == 'run_now':
+            fp.ViewObject.signalChangeIcon()
+
+    def doubleClicked(self,vobj):
+        self._toggleAnimating()
+
     def _isAnimating(self):
         """ surface the 'run_now' property of the Base object """
         # console: getattr(obj.ViewObject.Object, 'run_now', False)
@@ -124,14 +135,17 @@ class taAnimatorViewProvider:
         rv = getattr(animator, 'run_now', False)
         return rv
 
+    def _setAnimating(self, mode: bool = True):
+        animator = self.vObject.Object
+        setattr(animator,  'run_now', mode)
 
-    def updateData(self, fp, prop):
-        '''If a property of the handled feature has changed we have the chance to handle this here'''
-        # does this help us here? or must we hook to the Base object?
-        # if prop == "StartAnimating" or prop == "StopAnimating":
-        print("taAnimatorViewProvider.updateData.prop: ", prop)
-        if prop == 'run_now':
-            fp.ViewObject.signalChangeIcon()
+    def _toggleAnimating(self):
+        new_mode = not self._isAnimating()
+        self._setAnimating(mode = new_mode)
+
+
+
+
 
 
 ##
