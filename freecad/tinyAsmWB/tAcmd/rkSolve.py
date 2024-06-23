@@ -221,7 +221,7 @@ class rkSolverViewProvider:
 
     def _setRunning(self, mode: bool = True):
         solver = self.vObject.Object
-        setattr(solver,  'solver_now', mode)
+        setattr(solver,  'solve_now', mode)
 
     def _toggleRunning(self):
         new_mode = not self._isRunning()
