@@ -91,16 +91,23 @@ In the ### example tbd #### some siplified acutator leg is calculated, as it may
 
 `taSolver` is restricted to the case of sovling a 6*6 linear model: 6 parameters (aka 'degrees of Freedom' aka DoF) feed the model. The target is given as a Placement, which boils down to a 3-vector of translation and 3 Euler angles (or 4 quaternion components minus the normalisation, if you prefer). There may be real world problems with less DoF than 6, e.g. positioning a mill bit (5 DoF), moving a target part along a slide (5 DoF), along a plane (4 DoF), or postioning a welding tip (3 DoF). These cases can easily be handled by introducing some "shadow DoF". A spreadsheet is a perfect way to do so, but the audacious user may even implement them in the expression field of some model feature's property. The k.i.s.s-paradigm of `tinyAsm` forbids the implementaions of any variant you might think of (and even more) and leaves the details to the user.
 
+All configuration is supplied by builtin Ui in feature properties. Start/stop with a toggling icon is bound to tree view.
 for further details see example ### tbd ###
 
 ## taAnimator - Tiny Animator
 FreeCAD ships ### tbd ### animator macro with extended functions, but a somtimes hard to manage user interface. Another Addon ### tbd ### is even more rich of features far beyond simple kinematic visualisation.
 
 Assembly4 ships a tiny nice animator with a decent Gui, however limitied to Assembly4-proprietary "variables".
-The tinyAsm animator strives to match the functionality of Assembly4 animator. It refraines however from supplying an own Gui to match k.i.s.s. All configuration is supplied by builtin Ui in feature properties. Only start/stop with a toggling icon is bound to tree view.
+The tinyAsm animator strives to match the functionality of Assembly4 animator. It refraines however from supplying an own Gui to match k.i.s.s. All configuration is supplied by builtin Ui in feature properties. Start/stop with a toggling icon is bound to tree view.
 
 Details see example ### tbd ###
 
 
 # Common Functions aliased in Menue and Toolbar
 `tinyAsm` does not try to reinvent the wheel. So wherever FreeCAD builtin feature meet the requirements, they are supposed to be preferred. From Experience at the time of development, the following features are aliased in `tinyAsm` to avoid permanent switching of Workbenches. 
+
+* `DatumLCS` as provided by PartDesign-WB, stripped by PD-overhead (like desire to live in a body)
+Datum objects lie at the heart of TNP-avoiding concepts. There are several variants of them, with LCS carrying the most information with 6 DoF. Others (planes, lines, vertices... with DoF <6 ) may easily derived from LCS by introducing shadow variables. In many cases, this boils down simply ignore some of a Placement's variables.
+* The attacher `of Part-WB`.
+While it may not need the conceps of LCS-bound attachment in assembling, it's verey convenient to export features deep in a model to first level sub-Object of the enclosing container: __Simply attach some LCS to wherever you find appropriate__. This resembles the idea of a __controlled interface__ as in object oriented programming. The assembly "outside" just sees the LCS and does not care aboute the deep-unders. If any problems with TNP, flipping sketches or whatever other instabilities occur, they are locally contained (ande easy to be analyzed and understood) in the localized relam where the LCS is defined.
+* Part_primitives, Sketcher, Extrude and Reorient_sketch as common cross-WB functionalities. They are aliased for building simple bridging features between assemled groups, They also come handy for quick explorative test cases. It's not intended to replace other workbenches in full capability here. ### see workflow above ###
