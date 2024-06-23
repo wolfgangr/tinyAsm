@@ -16,6 +16,8 @@ License: LGPL 2+
 
 
 import FreeCAD
+import FreeCADGui
+from pivy import coin
 
 import numpy as np
 from scipy.optimize import fsolve
@@ -23,17 +25,28 @@ from scipy.optimize import fsolve
 import re
 # import time
 
+import os
+from freecad.tinyAsmWB import ICON_PATH
 
-# # required if we overload execute()
+##
+
 def recompute_cells(obj):
+    """ required if we overload execute()
+        since sheets show a peculiar recomputing behaviur
+    """
     u_range = obj.getUsedRange()
     range_str = u_range[0] + ':' + u_range[1]
     if range_str != '@0:@0':       # if sheet is not empty
         obj.recomputeCells(range_str)
 
 
-# =Unnamed#pySheet.cpy_res_posTip
+
 def parsePropPath( proppath , default_sheet = 'pySheet'):
+    """ parse source/target object path
+        template:
+            DocName#pySheet.cpy_res_posTip
+    """
+
     match = re.match(r"^(([\w]+)(#))?(([\w]+)(\.))?([\w]+)$", proppath)
     if not match:
         print(f"canot parse property path: {proppath}")
@@ -155,6 +168,68 @@ def create_rkSolver(obj_name = 'pySolver'):
     rkSolver(obj)
     return obj
 
+
+
+##
+
+
+class rkSolverViewProvider:
+    ''' basic defs '''
+
+    def __init__(self, obj):
+        obj.Proxy = self
+        self.vObject = obj
+
+    def attach(self, vobj):
+        self.standard = coin.SoGroup()
+        vobj.addDisplayMode(self.standard,"Standard");
+
+    def getDisplayModes(self,obj):
+        "'''Return a list of display modes.'''"
+        return ["Standard"]
+
+    def getDefaultDisplayMode(self):
+        "'''Return the name of the default display mode. It must be defined in getDisplayModes.'''"
+        return "Standard"
+
+    # start/stop by double click in tree view, change icon
+    def getIcon(self):
+        icon_stopped = os.path.join(ICON_PATH , 'taSolver_idle.svg')
+        icon_running = os.path.join(ICON_PATH , 'taSolver_running.svg')
+        if self._isRunning():
+            return icon_running
+        else:
+            return icon_stopped
+
+    def updateData(self, fp, prop):
+        '''If a property of the handled feature has changed we have the chance to handle this here'''
+        # fp is the underlying Base object?
+        # if prop == "StartAnimating" or prop == "StopAnimating":
+        # print("taAnimatorViewProvider.updateData.prop: ", prop)
+        if prop == 'run_now':
+            fp.ViewObject.signalChangeIcon()
+
+    def doubleClicked(self,vobj):
+        self._toggleRunning()
+
+    def _isRunning(self):
+        """ surface the 'run_now' property of the Base object """
+        # console: getattr(obj.ViewObject.Object, 'run_now', False)
+        solver = self.vObject.Object
+        rv = getattr(solver, 'solve_now', False)
+        return rv
+
+    def _setRunning(self, mode: bool = True):
+        solver = self.vObject.Object
+        setattr(solver,  'solver_now', mode)
+
+    def _toggleRunning(self):
+        new_mode = not self._isRunning()
+        self._setRunning(mode = new_mode)
+
+
+##
+
 class rkSolver():
     def __init__(self, obj):
         """
@@ -164,7 +239,7 @@ class rkSolver():
 
         self.Type = 'rkSolver'
         obj.Proxy = self
-
+        rkSolverViewProvider(obj.ViewObject)
 
         # properties
         grp = 'solverConfig'
