@@ -5,4 +5,6 @@
 004             LinkGPinspector and GPpart working
 005             pythonizable spreadsheet looks good
 006             create icons, incl. active double click for animator
+007             solver added and prelim UI tuned
+
 
