@@ -1,6 +1,17 @@
+"""
+freecad/tinyAsmWB/tAcmd/rkSolve.py
 
-# import dev.myTinyAsm.rkSolve as rkSolve
-# import
+(c) Wolfgang Rosner 2024 - wolfagngr@github.com
+License: LGPL 2+
+
+                'ToolTip' : "given \n"
+                    + "- a FreeCAD project with 6 DoF\n"
+                    + "- a target object to be placed\n"
+                    + "- a target placement value\n"
+                    + "solver modifies the model's DoF\n  until placement matches\n"
+                    + "(uses scipy.optimize.fsolve)"
+
+"""
 
 
 
@@ -8,10 +19,9 @@ import FreeCAD
 
 import numpy as np
 from scipy.optimize import fsolve
-# https://realpython.com/python-pretty-print/
-import pprint
+# import pprint
 import re
-import time
+# import time
 
 
 # # required if we overload execute()
@@ -47,7 +57,10 @@ def parsePropPath( proppath , default_sheet = 'pySheet'):
 
 
 def stratifyPlacement(plc: FreeCAD.Placement, clen=1):
+    """ return a optimizable 6 DoF vector derivate from placement """
     base = plc.Base
+    # cannot solve for seven variable with 6 inputs
+    # so we go for euler angles instead
     # rotQ  = plc.Rotation.Q      # normed quaternion
     ypr = plc.Rotation.getYawPitchRoll()
     rv   = list(base / clen)
@@ -56,17 +69,18 @@ def stratifyPlacement(plc: FreeCAD.Placement, clen=1):
     rv_ary = np.array(rv)
     return rv_ary
 
-# wraps acces to FC model via spreadsheet properties
-#   to flat python callable format
-#   input:  model input, i.e. written to sheet, property outside sheet
-#       supposedly a vector i.e. List or tuple
-#   output: model output, i.e. read from sheet, may be property or cell
-#       supposedly a placement
-#   target: target placement to be substracted (or whatever) since solver
-#       targets to all over zeros
-#  hangon .. can the quaternions be zero at all? better go for euler angles??
+
 
 class wrapModel:
+    """ wraps acces to FC model via spreadsheet properties
+    to flat python callable format
+    input:  model input, i.e. written to sheet, property outside sheet
+        supposedly a vector i.e. List or tuple
+    output: model output, i.e. read from sheet, may be property or cell
+        supposedly a placement
+    target: target placement to be substracted (or whatever) since solver
+        targets to all over zeros
+    """
 
     def __init__(self, solvBase = None,
                 input:  str='', inprop:  str='',
@@ -93,10 +107,6 @@ class wrapModel:
 
 
     def callModel(self, vect_in):
-        # sheet.addProperty('App::PropertyPythonObject', 'D8' )
-        # setattr(sheet, 'D8', propD8)
-        # setattr(self.iSheet, self.iPropName, list(vect_in) )
-        # t1 = time.perf_counter(), time.process_time()
         # print  (list(vect_in))
         setattr(self.solvBase, self.inProp,  list(vect_in) )
         setattr(self.iObj, self.iPropName,  list(vect_in) )
@@ -104,26 +114,16 @@ class wrapModel:
         self.iObj.touch()
 
         # t2 = time.perf_counter(), time.process_time()
-        # recompute_cells(self.iObj)
-        # self.iObj.recomputeCells(self.iPropName)
         recompute_cells(self.iObj)
         self.oDoc.recompute([self.oObj])
         self.oDoc.recompute()
-        # # recompute_cells(self.iSheet)
-        # #
-        # # self.iDoc.recompute()
-        # # if not self.iDoc == self.oDoc:
-        # #     self.oDoc.recompute()
-
         # t3 = time.perf_counter(), time.process_time()
 
         plc = self.oObj.getSubObject(self.oPropName + '.', retType=3)
-        # for debugging and final result - maybe move out later?
-        ## ================================~~~~~~~~~~~~~~~~~~~~~~~~~~--------------------------------------
+        # for debugging and final result
         setattr(self.solvBase, self.outProp,  plc )
         stratPlc = stratifyPlacement(plc, self.clen)
         # perform vector like substraction on lists
-        # rv = [ i2 - i1  for i1, i2 in zip (stratPlc, self.stratTarget) ]
         rv_ary = np.subtract(stratPlc, self.stratTarget)
 
         # t4 = time.perf_counter(), time.process_time()
@@ -139,14 +139,6 @@ class wrapModel:
 
         # self.t0 = time.perf_counter(), time.process_time()
 
-        ## TBD ---- current.multiply(inverse(target))
-        # solver approaches all zeroes!
-        # # dPlc = plc.multiply(self.iTarget)
-        # #
-        # # base = dPlc.Base
-        # # ypr = dPlc.Rotation.getYawPitchRoll()
-        # # rv = list(base / self.clen)
-        # # rv.extend(ypr)
         return rv_ary
 
 
@@ -160,10 +152,7 @@ def create_rkSolver(obj_name = 'pySolver'):
     """
 
     obj = FreeCAD.ActiveDocument.addObject('App::FeaturePython', obj_name)
-    # rkSolve.rkSolver(obj)
     rkSolver(obj)
-
-    # App.ActiveDocument.recompute()
     return obj
 
 class rkSolver():
@@ -227,9 +216,12 @@ class rkSolver():
         # ============~~~~~~~–-------------------------
 
 
-    # set model in to start vector independent of solver
-    # to be called at init, restore, change, non-solivng execute
+
     def resetModel(self, obj):
+        """
+            set model in to start vector independent of solver
+            to be called at init, restore, change, non-solivng execute
+        """
         vec = obj.StartVector
         setattr(obj, 'ModelInVector', vec)
 
@@ -244,22 +236,17 @@ class rkSolver():
         obj.Proxy = self
         self.resetModel(obj)
         # self.execute(obj)
-        # pass
 
     def execute(self, obj):
         """
-        Called on document recompute
+        this is where the simulation is started
+        to avoid recursive recomputes, place solver in own FCStd document
         """
         print('Recomputing {0:s} ({1:s})'.format(obj.Name, self.Type))
 
         if not getattr(obj, "solve_now", None):
             return None
 
-            # def __init__(self,
-            #             input:  str, inprop:  str,
-            #             output: str, outprop: str,
-            #             target: FreeCAD.Placement = None,
-            #             clen: float =1 ):
         t0 = time.perf_counter(), time.process_time()
 
         model = wrapModel(
