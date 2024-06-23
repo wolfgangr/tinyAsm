@@ -21,9 +21,9 @@ from pivy import coin
 
 import numpy as np
 from scipy.optimize import fsolve
-# import pprint
+import pprint
 import re
-# import time
+import time
 
 import os
 from freecad.tinyAsmWB import ICON_PATH
@@ -311,6 +311,20 @@ class rkSolver():
         obj.Proxy = self
         self.resetModel(obj)
         # self.execute(obj)
+
+    def onChanged(self, obj, prop):
+        """ recompute upon change in solve_now """
+
+        match prop:
+            case 'solve_now':
+                obj.touch()
+                obj.Document.recompute()
+                FreeCADGui.updateGui()
+
+            case _:
+                # print (f'debug: Property {prop} changed - no special handling')
+                pass
+
 
     def execute(self, obj):
         """
