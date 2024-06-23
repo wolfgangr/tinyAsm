@@ -1,8 +1,11 @@
 # The ideas behind tiny Assembler
 ## Development rationale
+### History
+### why minimalistic?
 ## "To Solve" or "Not To Solve"
 ## Typical Workflow Patterns
 # Features provided by tinyAsm
+'tinyAsm' provides a couple of own features to close gaps, left by the current (0.21.2) stable FreeCAD features:
 ## GPinspector - Global Placement Link inspector
 `GPinspector` is a FeaturePythonObject (aka FPO) supposed to be attached to Link-Part-Containers.
 Upon document recompute, it scans the linked Source-Container (Part) for it's first level sub-Objects.
@@ -36,11 +39,27 @@ GPpart is inspired by the Assembly4-Part
 
 `GPattach` is inspired by the Attacher in Assembly4 and tries to resemble its functionality.
 
-## Spreadsheet extendable functions by users
+## pySheet - Spreadsheet extendable functions by users
+The idea of user defined function in spreadsheets was the first approach to cope with the assembly quagmire of FreeCAD 0.21.2.
+* get real global Placement of linked Objects, which is available in Python, but not in FreeCAD expressions
+* perform calculations of anylytic geometry to keep control on constraints, where the Toological Naming Problem (TNP), flipping sketches and other DWIM-artefacts threaten to break models
+* open a hands-on development platform for the casual user without deep FreeCAD and Python experience
+
+Writing to spreadsheet cells and interfering with spreadsheet recalcuation from sheet-FPO aka SheetPython turned out to be a quagmire, too. So the customized functions write their result to "ordinary" Property fields of the spreadsheet object, but outside the sheet's cell matrix. This way, they don't interfere with the sheet, but nonetheless can be accessed from Expressions (both from within the sheet as well as from outside) the same way as with sheet cell aliases.
+
+### Security considerations of extendable functions
+Security considerations (see #### issue ### Link tbd) placed another constraint on the implementation of python extensions. The current implementation respects the FreeCAD security policy: Separate Code from Data. User defined functions can only reside in the `Macro` directory. Extensions shipped with tinyAsm reside in the `Mod`-tree - precisely in `.../FreeCAD/Mod/tinyAsm/freecad/tinyAsmWB/sheetExt/*`. Of course, any user is free to throw whatever code there he likes, or manipulate the source of `pySheet`. However, the same holds true for any extension of FreeCAD - as it lies at the very heart of FreeCAD architecture.
+
+A "sandbox"-like approach might be desirable and restrict potential damage of malicious code far beyond the way currently practised in FreeCAD. However, such an endeavor is far beyond the "tiny" approach of the current implementation.
+
+The current implementation puts narrow constraints to both functions and arguments supplied to Python evaluation. Though the concept war developped with due caution, neither a hardcore penetration test nor any independent code auditing has yet been performed. __You have been warned!__
+
 ### packed extensions with tiny Assembler
 #### global placement retriever
 #### triangle solver
 ### writing own spreadsheet extension in Python
+see example ... 
 ## Reverse Kinematic Solver
 ## Tiny Animator
 # Common Functions aliased in Menue and Toolbar
+`tinyAsm` does not try to reinvent the wheel. So wherever FreeCAD builtin feature meet the requirements, they are supposed to be preferred. From Experience at the time of development, the following features are aliased in `tinyAsm` to avoid permanent switching of Workbenches. 
