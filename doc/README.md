@@ -23,12 +23,16 @@ This way, FreeCAD-Expressions find a consistent point of reference to refer to t
 GPpart is inspired by the Assembly4-Part
 
 ## GPattach - LCS anchored Attacher
-GPattach is a FPO-Link to a Part-Container (aka "Child" - to be attached). It takes a reference to another Part Container (aka "Parent" - may be a Link, too). It scans both for their first level subobjects and maintains a enum Properties, where the user can select which subojects's Placement shall be used as attachment anchors.
 
-GPattach own placment is calculated as the sequence of
+`GPattach` attaches one Part Container or Part Link to another one by matching the placements of first level subobjects
+(typically, but not exclusively, Local Coordinate Sytems aka LCS) and optionally some additional placment offset.
+
+`GPattach` comprises an FPO-Link to a Part-Container (aka "Child" - to be attached). It takes a reference to another Part Container (aka "Parent" - may be a Link, too). It scans both for their first level subobjects and maintains enum Properties, where the user can select which subojects's Placement shall be used as attachment anchors.
+
+`GPattach`s own placment is calculated by chaining
 * Placement of selected anchor-sub-Object in the Parent
 * an offset Placement (defaults to all zeros, i.e. both anchors match)
-* inverse of selected anchor-sub-Object in the Child
+* inverse Placement of selected anchor-sub-Object in the Child
 
 `GPattach` is inspired by the Attacher in Assembly4 and tries to resemble its functionality.
 
