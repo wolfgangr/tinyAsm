@@ -82,7 +82,17 @@ The [triangle solver](../freecad/tinyAsmWB/sheetExt/trianglesolver.py) provides 
 ### writing own spreadsheet extension in Python
 see example ... ### TBD
 
-## Reverse Kinematic Solver
+## taSolver - Reverse Kinematic Solver
+`Assembly4` is advertized as 'solver free Assembly'. `tinyAsm` shares this attitude to the extent that most of assembly problems in real world constructions do not justify the price tag attached to a solver.
+
+However, there are some exceptions. Many of them are subsummed under the heading of "reverse kinematic solution". It is straightforward to attach geometric features to each other, controlled by some calculated parameters (i.e. "forward kinematic solution"). This is what most of the features explained above are for. However, there are cases of _"I want to arrive there - how can I achieve this?"_.
+
+In the ### example tbd #### some siplified acutator leg is calculated, as it may e.g. built into a hexapod or similiar concepts of parallel kinematics. The idea of tinyAsm is to supply a solver, but only when it is worth the price tag attached to it.
+
+`taSolver` is restricted to the case of sovling a 6*6 linear model: 6 parameters (aka 'degrees of Freedom' aka DoF) feed the model. The target is given as a Placement, which boils down to a 3-vector of translation and 3 Euler angles (or 4 quaternion components minus the normalisation, if you prefer). There may be real world problems with less DoF than 6, e.g. positioning a mill bit (5 DoF), moving a target part along a slide (5 DoF), along a plane (4 DoF), or postioning a welding tip (3 DoF). These cases can easily be handled by introducing some "shadow DoF". A spreadsheet is a perfect way to do so, but the audacious user may even implement them in the expression field of some model feature's property. The k.i.s.s-paradigm of `tinyAsm` forbids the implementaions of any variant you might think of (and even more) and leaves the details to the user.
+
+for further details see example ### tbd ###
+
 ## Tiny Animator
 # Common Functions aliased in Menue and Toolbar
 `tinyAsm` does not try to reinvent the wheel. So wherever FreeCAD builtin feature meet the requirements, they are supposed to be preferred. From Experience at the time of development, the following features are aliased in `tinyAsm` to avoid permanent switching of Workbenches. 
