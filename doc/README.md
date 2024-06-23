@@ -55,10 +55,33 @@ A "sandbox"-like approach might be desirable and restrict potential damage of ma
 The current implementation puts narrow constraints to both functions and arguments supplied to Python evaluation. Though the concept war developped with due caution, neither a hardcore penetration test nor any independent code auditing has yet been performed. __You have been warned!__
 
 ### packed extensions with tiny Assembler
-#### global placement retriever
+A set of prepacked extension fuctions is supplied in [.../tinyAsmWB/sheetExt](../freecad/tinyAsmWB/sheetExt).
+The User may mask them for availability or override them with own functions in the `Macro` directory.
+
+#### base extensions
+... live in [.../tinyAsmWB/sheetExt/sheetPyMods_base.py](../freecad/tinyAsmWB/sheetExt/sheetPyMods_base.py).
+The import statements at the top forward some system fuctions to the availability as extension functions.
+
+Among them is `scipy.optimize.fsolve`, a generic optimizer. For the solution of reverse kinematic problems - arguably the most common case in CAD - a specialized FPO feature was developped - see below.
+
+The others at the moment are mere test and basic "hello world"-level tools.
+
+##### global placement retriever
+... beeing the exception.
+
+It allows arbitrary object/Link combinations to be conveyed from "Python-Realm" to "Expression-Realm".
+Much of the development of tinyAsm is based on exploration with this code, and benchmarking the results against FreeCAD's builtin `GetGlobalPlacement` macro.
+
 #### triangle solver
+
+In addition to TNP, "flipping sketches" are a nasty side effect of giving too much freedom to "computerized intelligence".
+E.g. a triangle may "flip" to it's mirror, when just 3 edge lengths are provided. One possible approach may to supply tow edges and the angle between to the sketcher instead. 
+
+The [triangle solver](../freecad/tinyAsmWB/sheetExt/trianglesolver.py) provides a generic tool to different variations of this problem. Instructions are available in the source code and int the ### example TBD ###
+
 ### writing own spreadsheet extension in Python
-see example ... 
+see example ... ### TBD
+
 ## Reverse Kinematic Solver
 ## Tiny Animator
 # Common Functions aliased in Menue and Toolbar
