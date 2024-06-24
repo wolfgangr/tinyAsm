@@ -10,9 +10,9 @@
 
 ### Inspiration and Rationale
 
-*cope with FreeCAD startes frustration from toponaming, quagmire of support and assembly development
-*it's a poor craftsman who blames his tools
-*https://wiki.freecad.org/Topological_naming_problem
+* cope with FreeCAD startes frustration from toponaming, quagmire of support and assembly development
+* it's a poor craftsman who blames his tools
+* https://wiki.freecad.org/Topological_naming_problem  
 Use of supporting datum objects like planes and local coordinate systems is strongly recommended to produce models that aren't easily subject to such topological errors.
 
 #### Topological Naming Problem - Avoid it or Attack it?
