@@ -1,9 +1,5 @@
 # The ideas behind tiny Assembler
-## Development rationale
-### History
-### why minimalistic?
-## "To Solve" or "Not To Solve"
-## Typical Workflow Patterns
+
 # Features provided by tinyAsm
 'tinyAsm' provides a couple of own features to close gaps, left by the current (0.21.2) stable FreeCAD features:
 ## GPinspector - Global Placement Link inspector
