@@ -1,6 +1,6 @@
-## tinyAsm Workbench for FreeCAD
+# tinyAsm Workbench for FreeCAD
 
-# Disclaimer - premature work in progress
+## Disclaimer - premature work in progress
 Do not use for any serious project!  
 Current development state per June 2024 is somewhere at late alpha:  
 - Code as planned is roughly completed  
