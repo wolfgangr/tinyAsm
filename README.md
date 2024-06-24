@@ -1,19 +1,19 @@
 ## tinyAsm Workbench for FreeCAD
 
 # Disclaimer - premature work in progress
-Do not use for any serious project!
-Current development state per June 2024 is somewhere at late alpha:
-Code as planned is roughly completed
-Basic functionality is checked, 
-but expect errors, data loss and corruption of data and system.
-Of course, bold testers are invited to test and report feedback :-)
+Do not use for any serious project!  
+Current development state per June 2024 is somewhere at late alpha:  
+- Code as planned is roughly completed  
+- Basic functionality is checked
+
+However, expect errors, data loss and corruption of data and system.\
+Of course, bold testers are invited to test and report feedback :-)  
 
 ### Documentation
 growing here:
 [Documentation](./doc/README.md)
 
-Next step: 
-
+Next step:  
 test the workbench against some basic [Examples](./examples) and document the results
 
 
