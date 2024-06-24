@@ -171,7 +171,7 @@ class pySheetViewProvider:
         # obj.Proxy = self
         self.Object = obj
 
-    def attach(self, obj):
+    def attach(self, vobj):
         """
         Setup the scene sub-graph of the view provider, this method is mandatory
         """
